@@ -6,11 +6,9 @@ import { Button } from "./ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
-  { name: "Home", path: "/" },
-  { name: "Digital Literacy", path: "/digital-literacy" },
-  { name: "Safety Tools", path: "/safety-tools" },
-  { name: "Resources", path: "/resources" },
+  { name: "How It Works", path: "/how-it-works" },
   { name: "About", path: "/about" },
+  { name: "Resources", path: "/resources" },
 ];
 
 export const Header = () => {
@@ -29,18 +27,31 @@ export const Header = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden items-center space-x-1 md:flex">
+        <div className="hidden items-center space-x-6 md:flex">
           {navLinks.map((link) => (
-            <Link key={link.path} to={link.path}>
-              <Button
-                variant={isActive(link.path) ? "default" : "ghost"}
-                className="transition-smooth"
-              >
-                {link.name}
-              </Button>
+            <Link 
+              key={link.path} 
+              to={link.path}
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                isActive(link.path) ? 'text-primary' : 'text-muted-foreground'
+              }`}
+            >
+              {link.name}
             </Link>
           ))}
-          <ThemeToggle />
+          <div className="flex items-center space-x-3 ml-4 border-l border-border pl-6">
+            <ThemeToggle />
+            <Link to="/login">
+              <Button variant="ghost" size="sm">
+                Log In
+              </Button>
+            </Link>
+            <Link to="/signup">
+              <Button size="sm" className="bg-primary hover:bg-primary/90">
+                Sign Up
+              </Button>
+            </Link>
+          </div>
         </div>
 
         {/* Mobile Menu Button & Theme Toggle */}

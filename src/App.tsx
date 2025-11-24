@@ -6,6 +6,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { Layout } from "@/components/Layout";
 import Home from "./pages/Home";
+import HowItWorks from "./pages/HowItWorks";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import DigitalLiteracy from "./pages/DigitalLiteracy";
 import SafetyTools from "./pages/SafetyTools";
 import Resources from "./pages/Resources";
@@ -24,6 +27,9 @@ const App = () => (
           <Layout>
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/how-it-works" element={<HowItWorks />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
               <Route path="/digital-literacy" element={<DigitalLiteracy />} />
               <Route path="/safety-tools" element={<SafetyTools />} />
               <Route path="/resources" element={<Resources />} />
