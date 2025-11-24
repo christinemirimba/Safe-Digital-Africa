@@ -235,14 +235,18 @@ const Resources = () => {
             </CardHeader>
             <CardContent>
               <div className="flex flex-col gap-4 sm:flex-row">
-                <Button className="flex items-center gap-2 transition-smooth">
-                  <Mail className="h-4 w-4" />
-                  Email Us
-                </Button>
-                <Button variant="outline" className="flex items-center gap-2 transition-smooth">
-                  <ExternalLink className="h-4 w-4" />
-                  Visit Our Website
-                </Button>
+                <a href="mailto:mirimbachristine@gmail.com">
+                  <Button className="flex items-center gap-2 w-full sm:w-auto">
+                    <Mail className="h-4 w-4" />
+                    mirimbachristine@gmail.com
+                  </Button>
+                </a>
+                <a href="tel:+254701609261">
+                  <Button variant="outline" className="flex items-center gap-2 w-full sm:w-auto">
+                    <Phone className="h-4 w-4" />
+                    +254 701 609 261 (24/7)
+                  </Button>
+                </a>
               </div>
             </CardContent>
           </Card>

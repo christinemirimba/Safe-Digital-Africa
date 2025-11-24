@@ -1,4 +1,4 @@
-import { Shield, Mail, Twitter, Facebook, Instagram } from "lucide-react";
+import { Shield, Mail, Twitter, Facebook, Instagram, Linkedin } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export const Footer = () => {
@@ -17,14 +17,17 @@ export const Footer = () => {
               Supporting 16 Days of Activism Against Gender-Based Violence.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-muted-foreground transition-colors hover:text-primary" aria-label="Twitter">
+              <a href="https://x.com/Tinnah_Mirimba?t=nZPhrf1oB28G1s6LyyrssA&s=09" target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-primary" aria-label="Twitter">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="text-muted-foreground transition-colors hover:text-primary" aria-label="Facebook">
+              <a href="https://www.facebook.com/christine.kwamboka.39904" target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-primary" aria-label="Facebook">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-muted-foreground transition-colors hover:text-primary" aria-label="Instagram">
+              <a href="https://www.instagram.com/christinemirimba/?hl=en" target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-primary" aria-label="Instagram">
                 <Instagram className="h-5 w-5" />
+              </a>
+              <a href="https://www.linkedin.com/in/christine-mirimba-51202a26b/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground transition-colors hover:text-primary" aria-label="LinkedIn">
+                <Linkedin className="h-5 w-5" />
               </a>
             </div>
           </div>
@@ -62,11 +65,15 @@ export const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                 <Mail className="h-4 w-4 flex-shrink-0" />
-                <span>contact@safespaceafrica.org</span>
+                <a href="mailto:mirimbachristine@gmail.com" className="hover:text-primary transition-colors">
+                  mirimbachristine@gmail.com
+                </a>
               </div>
               <div className="text-sm">
-                <p className="text-muted-foreground mb-1">Emergency Hotline:</p>
-                <p className="font-semibold text-accent">+254 123 456 789</p>
+                <p className="text-muted-foreground mb-1">Available 24/7:</p>
+                <a href="tel:+254701609261" className="font-semibold text-primary hover:text-accent transition-colors">
+                  +254 701 609 261
+                </a>
               </div>
             </div>
           </div>

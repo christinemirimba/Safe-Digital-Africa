@@ -8,40 +8,40 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* SafeSpace Africa Light Mode */
+    /* Modern Teal Theme - Light Mode */
     --background: 0 0% 100%;
-    --foreground: 222 84% 15%;
+    --foreground: 210 11% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 84% 15%;
+    --card-foreground: 210 11% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 84% 15%;
+    --popover-foreground: 210 11% 15%;
 
-    /* Deep indigo/purple - empowerment & trust */
-    --primary: 244 47% 27%;
+    /* Teal primary color */
+    --primary: 174 62% 47%;
     --primary-foreground: 0 0% 100%;
-    --primary-light: 244 47% 35%;
+    --primary-light: 174 62% 60%;
     
-    /* Bright teal - safety & calm */
-    --secondary: 173 58% 39%;
+    /* Dark teal/slate secondary */
+    --secondary: 210 11% 15%;
     --secondary-foreground: 0 0% 100%;
-    --secondary-light: 173 58% 50%;
+    --secondary-light: 210 11% 25%;
 
-    /* Orange - urgency & action */
-    --accent: 20 91% 48%;
+    /* Accent teal */
+    --accent: 174 100% 29%;
     --accent-foreground: 0 0% 100%;
-    --accent-light: 20 91% 60%;
+    --accent-light: 174 100% 40%;
 
-    --muted: 220 13% 95%;
-    --muted-foreground: 220 9% 46%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 210 11% 46%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 244 47% 27%;
+    --border: 210 20% 90%;
+    --input: 210 20% 90%;
+    --ring: 174 62% 47%;
 
     --radius: 0.75rem;
     
@@ -52,40 +52,40 @@ All colors MUST be HSL.
   }
 
   .dark {
-    /* SafeSpace Africa Dark Mode */
-    --background: 222 47% 11%;
-    --foreground: 220 13% 95%;
+    /* Modern Teal Theme - Dark Mode */
+    --background: 210 11% 15%;
+    --foreground: 210 40% 98%;
 
-    --card: 222 47% 15%;
-    --card-foreground: 220 13% 95%;
+    --card: 210 11% 18%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 222 47% 15%;
-    --popover-foreground: 220 13% 95%;
+    --popover: 210 11% 18%;
+    --popover-foreground: 210 40% 98%;
 
-    /* Deep indigo/purple - dark mode */
-    --primary: 244 47% 60%;
-    --primary-foreground: 222 47% 11%;
-    --primary-dark: 244 47% 70%;
+    /* Teal primary - dark mode */
+    --primary: 174 62% 47%;
+    --primary-foreground: 0 0% 100%;
+    --primary-dark: 174 62% 60%;
 
-    /* Bright teal - dark mode */
-    --secondary: 173 58% 50%;
-    --secondary-foreground: 222 47% 11%;
-    --secondary-dark: 173 58% 60%;
+    /* Secondary - dark mode */
+    --secondary: 210 11% 25%;
+    --secondary-foreground: 210 40% 98%;
+    --secondary-dark: 210 11% 35%;
 
-    /* Orange - dark mode */
-    --accent: 20 91% 60%;
-    --accent-foreground: 222 47% 11%;
-    --accent-dark: 20 91% 70%;
+    /* Accent teal - dark mode */
+    --accent: 174 100% 29%;
+    --accent-foreground: 210 40% 98%;
+    --accent-dark: 174 100% 40%;
 
-    --muted: 222 47% 20%;
-    --muted-foreground: 220 13% 65%;
+    --muted: 210 11% 25%;
+    --muted-foreground: 210 20% 65%;
 
-    --destructive: 0 62% 50%;
-    --destructive-foreground: 220 13% 95%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
 
-    --border: 222 47% 25%;
-    --input: 222 47% 25%;
-    --ring: 244 47% 60%;
+    --border: 210 11% 25%;
+    --input: 210 11% 25%;
+    --ring: 174 62% 47%;
     
     /* Custom shadows for dark mode */
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
