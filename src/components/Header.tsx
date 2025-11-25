@@ -7,8 +7,9 @@ import { Button } from "./ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navLinks = [
+  { name: "Safety Tools", path: "/safety-tools" },
+  { name: "Digital Literacy Hub", path: "/digital-literacy" },
   { name: "How It Works", path: "/how-it-works" },
-  { name: "About", path: "/about" },
 ];
 
 export const Header = () => {
@@ -86,17 +87,20 @@ export const Header = () => {
               ))}
               <div className="pt-2 border-t border-border">
                 <p className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase">Resources</p>
-                <Link to="/digital-literacy" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">Digital Literacy</Button>
+                <Link to="/about" onClick={() => setMobileMenuOpen(false)}>
+                  <Button variant="ghost" className="w-full justify-start">About SafeSpace Africa</Button>
                 </Link>
-                <Link to="/safety-tools" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">Safety Tools</Button>
+                <Link to="/faq" onClick={() => setMobileMenuOpen(false)}>
+                  <Button variant="ghost" className="w-full justify-start">FAQ</Button>
                 </Link>
                 <Link to="/settings" onClick={() => setMobileMenuOpen(false)}>
                   <Button variant="ghost" className="w-full justify-start">Settings</Button>
                 </Link>
-                <Link to="/faq" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">FAQ</Button>
+                <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
+                  <Button variant="ghost" className="w-full justify-start">Contact Us</Button>
+                </Link>
+                <Link to="/privacy" onClick={() => setMobileMenuOpen(false)}>
+                  <Button variant="ghost" className="w-full justify-start">Privacy Policy</Button>
                 </Link>
               </div>
             </div>

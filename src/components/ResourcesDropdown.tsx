@@ -7,20 +7,20 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { Book, Shield, Settings, HelpCircle } from "lucide-react";
+import { Info, HelpCircle, Settings, Mail, FileText } from "lucide-react";
 
 const resources = [
   {
-    title: "Digital Literacy",
-    href: "/digital-literacy",
-    description: "Learn essential skills to navigate the digital world safely",
-    icon: Book,
+    title: "About SafeSpace Africa",
+    href: "/about",
+    description: "Learn about our mission and values",
+    icon: Info,
   },
   {
-    title: "Safety Tools",
-    href: "/safety-tools",
-    description: "Access practical tools and resources to protect yourself online",
-    icon: Shield,
+    title: "FAQ",
+    href: "/faq",
+    description: "Find answers to commonly asked questions",
+    icon: HelpCircle,
   },
   {
     title: "Settings",
@@ -29,10 +29,16 @@ const resources = [
     icon: Settings,
   },
   {
-    title: "FAQ",
-    href: "/faq",
-    description: "Find answers to commonly asked questions",
-    icon: HelpCircle,
+    title: "Contact Us",
+    href: "/contact",
+    description: "Get in touch with our team",
+    icon: Mail,
+  },
+  {
+    title: "Privacy Policy",
+    href: "/privacy",
+    description: "Read our privacy and data protection policy",
+    icon: FileText,
   },
 ];
 

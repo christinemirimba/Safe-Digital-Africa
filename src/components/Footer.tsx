@@ -27,8 +27,13 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/safety-tools" className="text-sm text-white/80 transition-colors hover:text-white">
+                  Safety Tools
+                </Link>
+              </li>
+              <li>
                 <Link to="/digital-literacy" className="text-sm text-white/80 transition-colors hover:text-white">
-                  Risk Assessment
+                  Digital Literacy Hub
                 </Link>
               </li>
               <li>
@@ -49,12 +54,17 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
-                <a href="mailto:mirimbachristine@gmail.com" className="text-sm text-white/80 transition-colors hover:text-white">
-                  Contact
-                </a>
+                <Link to="/contact" className="text-sm text-white/80 transition-colors hover:text-white">
+                  Contact Us
+                </Link>
               </li>
               <li>
-                <Link to="/resources" className="text-sm text-white/80 transition-colors hover:text-white">
+                <Link to="/settings" className="text-sm text-white/80 transition-colors hover:text-white">
+                  Settings
+                </Link>
+              </li>
+              <li>
+                <Link to="/privacy" className="text-sm text-white/80 transition-colors hover:text-white">
                   Privacy Policy
                 </Link>
               </li>

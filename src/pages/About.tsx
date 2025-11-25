@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Target, Users, Award, Heart, Mail, MapPin } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -170,38 +171,6 @@ const About = () => {
           </div>
         </div>
 
-        {/* Impact Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16"
-        >
-          <Card className="bg-gradient-to-r from-primary to-secondary text-white">
-            <CardContent className="py-12">
-              <h2 className="mb-8 text-center text-3xl font-bold">Our Impact in 2024</h2>
-              <div className="grid gap-8 md:grid-cols-4">
-                <div className="text-center">
-                  <p className="mb-2 text-4xl font-bold">10,000+</p>
-                  <p className="text-sm opacity-90">Women Trained</p>
-                </div>
-                <div className="text-center">
-                  <p className="mb-2 text-4xl font-bold">50+</p>
-                  <p className="text-sm opacity-90">Communities Reached</p>
-                </div>
-                <div className="text-center">
-                  <p className="mb-2 text-4xl font-bold">15</p>
-                  <p className="text-sm opacity-90">African Countries</p>
-                </div>
-                <div className="text-center">
-                  <p className="mb-2 text-4xl font-bold">24/7</p>
-                  <p className="text-sm opacity-90">Support Available</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-
         {/* Contact CTA */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -217,11 +186,13 @@ const About = () => {
                 Want to support our mission or partner with us? We'd love to hear from you.
               </p>
               <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <Button size="lg" className="flex items-center gap-2 transition-smooth">
-                  <Mail className="h-5 w-5" />
-                  Contact Us
-                </Button>
-                <Button size="lg" variant="outline" className="transition-smooth">
+                <Link to="/contact">
+                  <Button size="lg" className="flex items-center gap-2">
+                    <Mail className="h-5 w-5" />
+                    Contact Us
+                  </Button>
+                </Link>
+                <Button size="lg" variant="outline">
                   Become a Partner
                 </Button>
               </div>

@@ -76,13 +76,13 @@ const Home = () => {
             
             <div className="flex flex-col items-start justify-start gap-4 sm:flex-row">
               <Link to="/digital-literacy">
-                <Button size="lg" className="bg-secondary hover:bg-secondary-light text-white group shadow-lg">
+                <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white group shadow-lg">
                   Start Your Assessment
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
               <Link to="/about">
-                <Button size="lg" variant="outline" className="border-2 border-white/80 text-white hover:bg-white/10 hover:border-white">
+                <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white shadow-lg">
                   Learn More
                 </Button>
               </Link>
