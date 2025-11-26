@@ -124,6 +124,11 @@ const SafetyTools = () => {
                     <Button 
                       className="w-full transition-smooth" 
                       disabled={tool.status === "Coming Soon"}
+                      onClick={() => {
+                        if (tool.status === "Available") {
+                          alert(`${tool.title} feature coming soon! This will provide: ${tool.description}`);
+                        }
+                      }}
                     >
                       {tool.action}
                     </Button>

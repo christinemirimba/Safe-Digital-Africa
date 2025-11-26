@@ -3,6 +3,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { CourseViewer } from "@/components/CourseViewer";
+import { courseData } from "@/data/courseData";
 
 const courses = [
   {
@@ -36,6 +39,18 @@ const courses = [
 ];
 
 const DigitalLiteracy = () => {
+  const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
+
+  if (selectedCourse && courseData[selectedCourse as keyof typeof courseData]) {
+    return (
+      <CourseViewer
+        courseName={selectedCourse}
+        modules={courseData[selectedCourse as keyof typeof courseData].modules}
+        onClose={() => setSelectedCourse(null)}
+      />
+    );
+  }
+
   return (
     <div className="w-full py-12">
       <div className="container mx-auto px-4">
@@ -122,7 +137,10 @@ const DigitalLiteracy = () => {
                         </li>
                       ))}
                     </ul>
-                    <Button className="w-full transition-smooth">
+                    <Button 
+                      className="w-full transition-smooth"
+                      onClick={() => setSelectedCourse(course.title)}
+                    >
                       Start Learning
                     </Button>
                   </CardContent>
