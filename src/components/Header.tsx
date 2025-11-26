@@ -23,7 +23,10 @@ export const Header = () => {
       <nav className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-2 transition-smooth hover:opacity-80">
-          <Shield className="h-8 w-8 text-primary" />
+          <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="h-8 w-8">
+            <path d="M16 2 L28 8 L28 14 C28 22 20 30 16 30 C12 30 4 22 4 14 L4 8 Z" fill="hsl(var(--primary))"/>
+            <path d="M18 12 C18 12 20 14 20 16 C20 18 22 20 22 22 C22 24 20 24 20 24 C20 24 18 22 18 20 C18 18 16 18 16 20 C16 22 14 24 14 24 C14 24 12 22 12 20 C12 18 14 16 14 14 C14 12 16 12 16 12 C16 12 18 12 18 12 Z" fill="white"/>
+          </svg>
           <span className="text-xl font-bold text-foreground">SafeSpace Africa</span>
         </Link>
 

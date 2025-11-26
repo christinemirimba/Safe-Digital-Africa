@@ -111,7 +111,7 @@ const HowItWorks = () => {
             </p>
             <Link to="/digital-literacy">
               <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white hover:scale-105 transition-transform">
-                Start Your Assessment
+                Take Free Courses
               </Button>
             </Link>
           </motion.div>

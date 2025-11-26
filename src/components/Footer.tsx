@@ -9,11 +9,14 @@ export const Footer = () => {
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <Shield className="h-6 w-6 text-white" />
+              <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="h-6 w-6">
+                <path d="M16 2 L28 8 L28 14 C28 22 20 30 16 30 C12 30 4 22 4 14 L4 8 Z" fill="white"/>
+                <path d="M18 12 C18 12 20 14 20 16 C20 18 22 20 22 22 C22 24 20 24 20 24 C20 24 18 22 18 20 C18 18 16 18 16 20 C16 22 14 24 14 24 C14 24 12 22 12 20 C12 18 14 16 14 14 C14 12 16 12 16 12 C16 12 18 12 18 12 Z" fill="#0d9488"/>
+              </svg>
               <span className="text-lg font-bold">SafeSpace Africa</span>
             </div>
             <p className="text-sm text-white/80 max-w-md">
-              Advanced digital safety assessment powered by community.
+              Empowering African women and girls with the tools, knowledge, and community to navigate the digital world safely and confidently.
             </p>
           </div>
 

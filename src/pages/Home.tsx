@@ -71,7 +71,7 @@ const Home = () => {
             </h1>
             
             <p className="mb-8 text-xl text-white/95 md:text-2xl max-w-3xl leading-relaxed">
-              Get personalized safety assessments in seconds. Our AI analyzes your digital presence to provide accurate risk analysis and actionable insights for a safer online experience.
+              Empowering African women and girls with the tools, knowledge, and community to navigate the digital world safely and confidently. Take digital safety assessment now to check your digital hygiene.
             </p>
             
             <div className="flex flex-col items-start justify-start gap-4 sm:flex-row">
@@ -81,9 +81,9 @@ const Home = () => {
                   <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </Button>
               </Link>
-              <Link to="/about">
+              <Link to="/safety-tools">
                 <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white shadow-lg">
-                  Learn More
+                  Explore Safety Tools
                 </Button>
               </Link>
             </div>
@@ -195,13 +195,13 @@ const Home = () => {
               Join Our Community Today
             </h2>
             <p className="mb-8 text-lg text-white/95 max-w-2xl mx-auto leading-relaxed">
-              Connect with thousands of women building safer digital spaces together. Supporting 16 Days of Activism Against Gender-Based Violence.
+              Connect with thousands of African women and girls building safer digital spaces together. Join our supportive Facebook community for resources, support, and empowerment.
             </p>
-            <Link to="/digital-literacy">
+            <a href="https://www.facebook.com/christine.kwamboka.39904" target="_blank" rel="noopener noreferrer">
               <Button size="lg" className="bg-white text-primary hover:bg-white/90 shadow-lg hover:shadow-xl transition-all">
-                Start Your Assessment
+                Join Our Facebook Community
               </Button>
-            </Link>
+            </a>
           </motion.div>
         </div>
       </section>
