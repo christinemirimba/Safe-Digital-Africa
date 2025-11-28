@@ -8,6 +8,7 @@ import { Layout } from "@/components/Layout";
 import Home from "./pages/Home";
 import HowItWorks from "./pages/HowItWorks";
 import DigitalLiteracy from "./pages/DigitalLiteracy";
+import CourseViewer from "./pages/CourseViewer";
 import SafetyAssessment from "./pages/SafetyAssessment";
 import SafetyTools from "./pages/SafetyTools";
 import PasswordStrength from "./pages/PasswordStrength";
@@ -34,6 +35,7 @@ const App = () => (
               <Route path="/" element={<Home />} />
               <Route path="/how-it-works" element={<HowItWorks />} />
               <Route path="/digital-literacy" element={<DigitalLiteracy />} />
+              <Route path="/course/:courseId" element={<CourseViewer />} />
               <Route path="/safety-assessment" element={<SafetyAssessment />} />
               <Route path="/safety-tools" element={<SafetyTools />} />
               <Route path="/password-strength" element={<PasswordStrength />} />

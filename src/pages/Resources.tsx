@@ -1,6 +1,10 @@
-import { Phone, Mail, Download, ExternalLink, MapPin, Heart } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useState } from "react";
+import { Phone, Mail, Download, ExternalLink, MapPin, Heart, Search, FileText, Shield, Users } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 
 const hotlines = [
@@ -30,36 +34,82 @@ const hotlines = [
   },
 ];
 
-const resources = [
+const allResources = [
   {
-    title: "Digital Safety Guide",
-    description: "Comprehensive PDF guide covering online safety fundamentals",
+    id: 1,
+    title: "Digital Safety Guide 2024",
+    description: "Comprehensive PDF guide covering online safety fundamentals, privacy settings, and threat avoidance.",
+    category: "Technical",
     type: "PDF",
     size: "2.5 MB",
+    icon: Shield,
+    url: "/resources/digital-safety-guide.pdf"
   },
   {
+    id: 2,
     title: "Social Media Privacy Checklist",
-    description: "Step-by-step checklist for securing your social media accounts",
+    description: "Step-by-step checklist for securing your Facebook, Instagram, Twitter, and TikTok accounts.",
+    category: "Technical",
     type: "PDF",
     size: "1.2 MB",
+    icon: FileText,
+    url: "/resources/privacy-checklist.pdf"
   },
   {
-    title: "Password Security Template",
-    description: "Template to organize and manage your passwords securely",
-    type: "Document",
-    size: "500 KB",
+    id: 3,
+    title: "Legal Rights Online",
+    description: "Understanding your legal rights regarding digital harassment, cyberbullying, and data privacy in Africa.",
+    category: "Legal",
+    type: "PDF",
+    size: "1.8 MB",
+    icon: FileText,
+    url: "/resources/legal-rights.pdf"
   },
   {
+    id: 4,
+    title: "Mental Health & Digital Wellness",
+    description: "Strategies for maintaining mental well-being while navigating digital spaces and dealing with online toxicity.",
+    category: "Mental Health",
+    type: "PDF",
+    size: "3.1 MB",
+    icon: Heart,
+    url: "/resources/mental-health-guide.pdf"
+  },
+  {
+    id: 5,
     title: "Incident Documentation Form",
-    description: "Form to document online harassment or threats for reporting",
+    description: "Standardized form to document online harassment or threats for reporting to authorities.",
+    category: "Legal",
     type: "PDF",
     size: "800 KB",
+    icon: FileText,
+    url: "/resources/incident-form.pdf"
+  },
+  {
+    id: 6,
+    title: "Community Support Directory",
+    description: "Directory of women-led tech communities and support groups across various African regions.",
+    category: "Community",
+    type: "PDF",
+    size: "1.5 MB",
+    icon: Users,
+    url: "/resources/community-directory.pdf"
   },
 ];
 
 const Resources = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeTab, setActiveTab] = useState("all");
+
+  const filteredResources = allResources.filter((resource) => {
+    const matchesSearch = resource.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      resource.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesCategory = activeTab === "all" || resource.category.toLowerCase().replace(" ", "-") === activeTab;
+    return matchesSearch && matchesCategory;
+  });
+
   return (
-    <div className="w-full py-12">
+    <div className="w-full py-12 min-h-screen bg-background">
       <div className="container mx-auto px-4">
         {/* Header */}
         <motion.div
@@ -67,25 +117,19 @@ const Resources = () => {
           animate={{ opacity: 1, y: 0 }}
           className="mb-12 text-center"
         >
-          <h1 className="mb-4 text-4xl font-bold md:text-5xl">Resources & Support</h1>
+          <h1 className="mb-4 text-4xl font-bold md:text-5xl font-display">Resources & Support</h1>
           <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Access emergency hotlines, downloadable resources, and support services across Africa.
+            Access emergency hotlines, downloadable guides, and expert support to help you navigate the digital world safely.
           </p>
         </motion.div>
 
-        {/* Emergency Hotlines */}
-        <div className="mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-6"
-          >
-            <h2 className="mb-2 text-2xl font-bold">Emergency Hotlines</h2>
-            <p className="text-muted-foreground">24/7 support available across Africa</p>
-          </motion.div>
-
-          <div className="grid gap-6 md:grid-cols-2">
+        {/* Emergency Hotlines Section */}
+        <div className="mb-16">
+          <div className="flex items-center gap-2 mb-6">
+            <Phone className="h-6 w-6 text-accent" />
+            <h2 className="text-2xl font-bold">Emergency Hotlines</h2>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {hotlines.map((hotline, index) => (
               <motion.div
                 key={hotline.country}
@@ -94,27 +138,24 @@ const Resources = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="shadow-card transition-all duration-300 hover:shadow-card-hover">
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center gap-2">
-                        <MapPin className="h-5 w-5 text-accent" />
-                        <CardTitle>{hotline.country}</CardTitle>
-                      </div>
-                      <span className="rounded-full bg-secondary/10 px-3 py-1 text-xs font-medium text-secondary">
+                <Card className="h-full border-l-4 border-l-accent shadow-sm hover:shadow-md transition-shadow">
+                  <CardHeader className="pb-2">
+                    <div className="flex justify-between items-start">
+                      <Badge variant="outline" className="mb-2">{hotline.country}</Badge>
+                      <Badge variant="secondary" className="bg-green-100 text-green-800 hover:bg-green-100">
                         {hotline.available}
-                      </span>
+                      </Badge>
                     </div>
-                    <CardDescription className="text-base">{hotline.name}</CardDescription>
+                    <CardTitle className="text-lg">{hotline.name}</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <Phone className="h-5 w-5 text-primary" />
-                        <span className="text-lg font-semibold">{hotline.phone}</span>
+                    <div className="flex flex-col gap-3 mt-2">
+                      <div className="flex items-center gap-2 text-lg font-bold text-primary">
+                        <Phone className="h-5 w-5" />
+                        {hotline.phone}
                       </div>
-                      <a href={`tel:${hotline.phone}`}>
-                        <Button size="sm" className="transition-smooth">
+                      <a href={`tel:${hotline.phone}`} className="w-full">
+                        <Button size="sm" className="w-full bg-accent hover:bg-accent/90">
                           Call Now
                         </Button>
                       </a>
@@ -126,132 +167,113 @@ const Resources = () => {
           </div>
         </div>
 
-        {/* Downloadable Resources */}
-        <div className="mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-6"
-          >
-            <h2 className="mb-2 text-2xl font-bold">Downloadable Materials</h2>
-            <p className="text-muted-foreground">Free resources to support your digital safety journey</p>
-          </motion.div>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            {resources.map((resource, index) => (
-              <motion.div
-                key={resource.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Card className="shadow-card transition-all duration-300 hover:shadow-card-hover">
-                  <CardHeader>
-                    <CardTitle className="flex items-start justify-between">
-                      <span>{resource.title}</span>
-                      <Download className="h-5 w-5 text-primary" />
-                    </CardTitle>
-                    <CardDescription className="text-base">{resource.description}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex items-center justify-between">
-                      <div className="text-sm text-muted-foreground">
-                        <span className="font-medium">{resource.type}</span> • {resource.size}
-                      </div>
-                      <Button variant="outline" size="sm" className="transition-smooth">
-                        Download
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+        {/* Resource Library Section */}
+        <div className="mb-16">
+          <div className="flex flex-col md:flex-row justify-between items-end md:items-center mb-8 gap-4">
+            <div>
+              <h2 className="text-2xl font-bold mb-2">Resource Library</h2>
+              <p className="text-muted-foreground">Curated guides and tools for your safety</p>
+            </div>
+            <div className="w-full md:w-72 relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search resources..."
+                className="pl-10"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
           </div>
+
+          <Tabs defaultValue="all" className="w-full" onValueChange={setActiveTab}>
+            <TabsList className="mb-8 flex flex-wrap h-auto p-1 gap-1 bg-muted/50">
+              <TabsTrigger value="all" className="flex-1 min-w-[100px]">All Resources</TabsTrigger>
+              <TabsTrigger value="technical" className="flex-1 min-w-[100px]">Technical Safety</TabsTrigger>
+              <TabsTrigger value="legal" className="flex-1 min-w-[100px]">Legal Rights</TabsTrigger>
+              <TabsTrigger value="mental-health" className="flex-1 min-w-[100px]">Mental Health</TabsTrigger>
+              <TabsTrigger value="community" className="flex-1 min-w-[100px]">Community</TabsTrigger>
+            </TabsList>
+
+            <TabsContent value={activeTab} className="mt-0">
+              <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {filteredResources.length > 0 ? (
+                  filteredResources.map((resource) => (
+                    <motion.div
+                      key={resource.id}
+                      layout
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Card className="h-full flex flex-col hover:shadow-lg transition-all duration-300 group">
+                        <CardHeader>
+                          <div className="flex justify-between items-start mb-2">
+                            <div className="p-2 rounded-lg bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                              <resource.icon className="h-6 w-6" />
+                            </div>
+                            <Badge variant="outline">{resource.category}</Badge>
+                          </div>
+                          <CardTitle className="line-clamp-1">{resource.title}</CardTitle>
+                          <CardDescription className="line-clamp-2 mt-2">
+                            {resource.description}
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="flex-grow">
+                          <div className="flex items-center text-sm text-muted-foreground gap-4">
+                            <span className="flex items-center gap-1">
+                              <FileText className="h-4 w-4" /> {resource.type}
+                            </span>
+                            <span>{resource.size}</span>
+                          </div>
+                        </CardContent>
+                        <CardFooter className="pt-0">
+                          <a href={resource.url} download className="w-full">
+                            <Button variant="outline" className="w-full group-hover:border-primary group-hover:text-primary transition-colors">
+                              <Download className="mr-2 h-4 w-4" />
+                              Download
+                            </Button>
+                          </a>
+                        </CardFooter>
+                      </Card>
+                    </motion.div>
+                  ))
+                ) : (
+                  <div className="col-span-full text-center py-12 text-muted-foreground">
+                    <Search className="h-12 w-12 mx-auto mb-4 opacity-20" />
+                    <p>No resources found matching your search.</p>
+                  </div>
+                )}
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
 
-        {/* Support Services */}
+        {/* Contact Support */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mb-12"
+          className="bg-primary text-primary-foreground rounded-2xl p-8 md:p-12 text-center"
         >
-          <Card className="bg-gradient-to-br from-primary/10 to-secondary/10">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Heart className="h-6 w-6 text-accent" />
-                Additional Support Services
-              </CardTitle>
-              <CardDescription className="text-base">
-                Connect with professional support and counseling services
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4 md:grid-cols-3">
-                <div className="space-y-2">
-                  <h3 className="font-semibold">Legal Support</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Access legal advice and representation for digital abuse cases
-                  </p>
-                  <Button variant="outline" size="sm" className="w-full transition-smooth">
-                    Learn More
-                  </Button>
-                </div>
-                <div className="space-y-2">
-                  <h3 className="font-semibold">Counseling Services</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Professional mental health support for trauma and recovery
-                  </p>
-                  <Button variant="outline" size="sm" className="w-full transition-smooth">
-                    Book Session
-                  </Button>
-                </div>
-                <div className="space-y-2">
-                  <h3 className="font-semibold">Community Groups</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Join support groups and connect with other survivors
-                  </p>
-                  <Button variant="outline" size="sm" className="w-full transition-smooth">
-                    Join Now
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        {/* Contact Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <Card>
-            <CardHeader>
-              <CardTitle>Get in Touch</CardTitle>
-              <CardDescription className="text-base">
-                Have questions or need additional support? We're here to help.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col gap-4 sm:flex-row">
-                <a href="mailto:mirimbachristine@gmail.com">
-                  <Button className="flex items-center gap-2 w-full sm:w-auto">
-                    <Mail className="h-4 w-4" />
-                    mirimbachristine@gmail.com
-                  </Button>
-                </a>
-                <a href="tel:+254701609261">
-                  <Button variant="outline" className="flex items-center gap-2 w-full sm:w-auto">
-                    <Phone className="h-4 w-4" />
-                    +254 701 609 261 (24/7)
-                  </Button>
-                </a>
-              </div>
-            </CardContent>
-          </Card>
+          <h2 className="text-3xl font-bold mb-4 font-display">Need Personalized Support?</h2>
+          <p className="text-primary-foreground/80 max-w-2xl mx-auto mb-8 text-lg">
+            Our team is here to help you navigate complex digital safety challenges. Reach out to us for confidential assistance.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="mailto:mirimbachristine@gmail.com">
+              <Button size="lg" variant="secondary" className="w-full sm:w-auto font-semibold">
+                <Mail className="mr-2 h-5 w-5" />
+                Email Support
+              </Button>
+            </a>
+            <a href="tel:+254701609261">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto bg-transparent border-white/20 text-white hover:bg-white/10">
+                <Phone className="mr-2 h-5 w-5" />
+                Call Helpline
+              </Button>
+            </a>
+          </div>
         </motion.div>
       </div>
     </div>

@@ -1,10 +1,16 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Shield } from "lucide-react";
+import { Menu, Shield, LogOut } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 import { ResourcesDropdown } from "./ResourcesDropdown";
 import { Button } from "./ui/button";
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const navLinks = [
   { name: "Safety Tools", path: "/safety-tools" },
@@ -13,103 +19,111 @@ const navLinks = [
 ];
 
 export const Header = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
 
   const isActive = (path: string) => location.pathname === path;
 
+  const handleQuickExit = () => {
+    window.location.href = "https://www.google.com";
+  };
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/98 backdrop-blur-sm shadow-sm">
-      <nav className="container mx-auto flex h-16 items-center justify-between px-4">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md shadow-sm transition-all duration-300">
+      <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
         {/* Logo */}
-        <Link to="/" className="flex items-center space-x-2 transition-smooth hover:opacity-80">
-          <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" className="h-8 w-8">
-            <path d="M16 2 L28 8 L28 14 C28 22 20 30 16 30 C12 30 4 22 4 14 L4 8 Z" fill="hsl(var(--primary))"/>
-            <path d="M18 12 C18 12 20 14 20 16 C20 18 22 20 22 22 C22 24 20 24 20 24 C20 24 18 22 18 20 C18 18 16 18 16 20 C16 22 14 24 14 24 C14 24 12 22 12 20 C12 18 14 16 14 14 C14 12 16 12 16 12 C16 12 18 12 18 12 Z" fill="white"/>
-          </svg>
-          <span className="text-xl font-bold text-foreground">SafeSpace Africa</span>
+        <Link to="/" className="flex items-center space-x-3 group">
+          <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary/20">
+            <Shield className="h-6 w-6 text-primary" />
+          </div>
+          <span className="text-xl font-bold tracking-tight text-foreground font-display">
+            Safe Digital Africa
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden items-center space-x-6 md:flex">
+        <nav className="hidden items-center space-x-8 md:flex">
           {navLinks.map((link) => (
-            <Link 
-              key={link.path} 
+            <Link
+              key={link.path}
               to={link.path}
-              className={`text-sm font-medium transition-colors hover:text-secondary ${
-                isActive(link.path) ? 'text-primary' : 'text-muted-foreground'
-              }`}
+              className={`text-sm font-medium transition-colors hover:text-primary ${isActive(link.path)
+                ? "text-primary font-semibold"
+                : "text-muted-foreground"
+                }`}
             >
               {link.name}
             </Link>
           ))}
           <ResourcesDropdown />
-          <div className="ml-4 border-l border-border pl-4">
-            <ThemeToggle />
-          </div>
-        </div>
+        </nav>
 
-        {/* Mobile Menu Button & Theme Toggle */}
-        <div className="flex items-center space-x-2 md:hidden">
+        {/* Right Actions */}
+        <div className="hidden items-center space-x-4 md:flex">
           <ThemeToggle />
           <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle mobile menu"
+            variant="destructive"
+            onClick={handleQuickExit}
+            className="hidden lg:flex gap-2 font-semibold shadow-md hover:shadow-lg transition-all"
           >
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            <LogOut className="h-4 w-4" />
+            Quick Exit
           </Button>
         </div>
-      </nav>
 
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="border-b border-border bg-background md:hidden"
+        {/* Mobile Menu */}
+        <div className="flex items-center space-x-4 md:hidden">
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={handleQuickExit}
+            className="flex gap-2 font-semibold"
           >
-            <div className="container mx-auto px-4 py-4 space-y-2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <Button
-                    variant={isActive(link.path) ? "default" : "ghost"}
-                    className="w-full justify-start"
+            <LogOut className="h-4 w-4" />
+            Exit
+          </Button>
+
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" aria-label="Open menu">
+                <Menu className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+              <SheetHeader className="text-left border-b pb-4 mb-4">
+                <SheetTitle className="flex items-center gap-2 font-display text-xl">
+                  <Shield className="h-5 w-5 text-primary" />
+                  Safe Digital Africa
+                </SheetTitle>
+              </SheetHeader>
+              <div className="flex flex-col space-y-4">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    onClick={() => setIsOpen(false)}
+                    className={`text-lg font-medium transition-colors hover:text-primary ${isActive(link.path) ? "text-primary" : "text-muted-foreground"
+                      }`}
                   >
                     {link.name}
-                  </Button>
+                  </Link>
+                ))}
+                <div className="h-px bg-border my-2" />
+                <Link
+                  to="/about"
+                  onClick={() => setIsOpen(false)}
+                  className="text-lg font-medium text-muted-foreground hover:text-primary"
                 </Link>
-              ))}
-              <div className="pt-2 border-t border-border">
-                <p className="px-3 py-2 text-xs font-semibold text-muted-foreground uppercase">Resources</p>
-                <Link to="/about" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">About SafeSpace Africa</Button>
-                </Link>
-                <Link to="/faq" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">FAQ</Button>
-                </Link>
-                <Link to="/settings" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">Settings</Button>
-                </Link>
-                <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">Contact Us</Button>
-                </Link>
-                <Link to="/privacy" onClick={() => setMobileMenuOpen(false)}>
-                  <Button variant="ghost" className="w-full justify-start">Privacy Policy</Button>
-                </Link>
+              <div className="h-px bg-border my-2" />
+              <div className="flex items-center justify-between py-2">
+                <span className="text-sm font-medium text-muted-foreground">Theme</span>
+                <ThemeToggle />
               </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
+          </SheetContent>
+        </Sheet>
+      </div>
+    </div>
+    </header >
   );
 };

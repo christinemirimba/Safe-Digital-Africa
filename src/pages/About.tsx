@@ -29,9 +29,9 @@ const values = [
 
 const team = [
   {
-    name: "Dr. Amina Okoye",
+    name: "Christine Mirimba",
     role: "Founder & Executive Director",
-    location: "Lagos, Nigeria",
+    location: "Nairobi, Kenya",
   },
   {
     name: "Grace Mwangi",
@@ -79,12 +79,12 @@ const About = () => {
             </CardHeader>
             <CardContent className="text-lg">
               <p className="mb-4">
-                SafeSpace Africa is dedicated to creating safer digital environments for women and girls across the African continent. 
-                We provide comprehensive digital literacy education, practical safety tools, and support services to empower our 
+                SafeSpace Africa is dedicated to creating safer digital environments for women and girls across the African continent.
+                We provide comprehensive digital literacy education, practical safety tools, and support services to empower our
                 community to navigate online spaces with confidence and security.
               </p>
               <p>
-                Through education, advocacy, and technology, we're working towards a future where every woman and girl can 
+                Through education, advocacy, and technology, we're working towards a future where every woman and girl can
                 participate fully in the digital world without fear of harassment, abuse, or exploitation.
               </p>
             </CardContent>

@@ -3,7 +3,7 @@
 ## Prerequisites
 - Node.js 18+ installed
 - GitHub account (for code hosting)
-- Vercel account (free at vercel.com)
+- Vercel account 
 
 ## Step-by-Step Deployment Instructions
 

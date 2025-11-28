@@ -1,208 +1,246 @@
-import { Link } from "react-router-dom";
-import { Shield, Book, Lock, Users, ArrowRight } from "lucide-react";
+import { Hero } from "@/components/Hero";
+import { FeatureCard } from "@/components/CustomCards";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import {
+  Shield,
+  BookOpen,
+  Users,
+  Lock,
+  Globe,
+  Award,
+  MessageCircle
+} from "lucide-react";
+import { Link } from "react-router-dom";
 
 const features = [
   {
-    icon: Shield,
-    title: "AI-Powered Protection",
-    description: "Advanced algorithms detect and prevent digital violence with 98%+ accuracy for comprehensive safety.",
-    path: "/safety-tools",
-    color: "text-primary",
+    icon: <Shield className="h-6 w-6" />,
+    title: "Privacy Protection",
+    description: "Learn how to secure your personal data and maintain privacy across all digital platforms."
   },
   {
-    icon: Book,
-    title: "Real-Time Learning",
-    description: "Instant access to digital literacy courses and safety guides available 24/7 for continuous learning.",
-    path: "/digital-literacy",
-    color: "text-secondary",
+    icon: <Lock className="h-6 w-6" />,
+    title: "Secure Communication",
+    description: "Master the art of encrypted messaging and safe social media interaction."
   },
   {
-    icon: Lock,
-    title: "Secure & Private",
-    description: "End-to-end encryption ensuring complete data privacy and security for all users.",
-    path: "/safety-tools",
-    color: "text-accent",
+    icon: <Globe className="h-6 w-6" />,
+    title: "Digital Footprint",
+    description: "Understand and manage your online presence to prevent unwanted tracking."
   },
   {
-    icon: Users,
-    title: "Community-Centered",
-    description: "Personalized support and resources tailored to individual safety profiles and needs.",
-    path: "/resources",
-    color: "text-primary",
+    icon: <BookOpen className="h-6 w-6" />,
+    title: "Expert Resources",
+    description: "Access a comprehensive library of guides, tutorials, and safety checklists."
   },
   {
-    icon: Shield,
-    title: "Predictive Analytics",
-    description: "Forecast potential digital risks with advanced predictive modeling and threat detection.",
-    path: "/safety-tools",
-    color: "text-secondary",
+    icon: <Users className="h-6 w-6" />,
+    title: "Community Support",
+    description: "Join a supportive network of women sharing experiences and advice."
   },
   {
-    icon: Book,
-    title: "24/7 Access",
-    description: "Round-the-clock availability for real-time safety assessments and emergency support.",
-    path: "/resources",
-    color: "text-accent",
+    icon: <Award className="h-6 w-6" />,
+    title: "Certification",
+    description: "Earn certificates as you complete modules and master digital safety skills."
+  }
+];
+
+const steps = [
+  {
+    number: "01",
+    title: "Assess Your Risk",
+    description: "Take our comprehensive safety assessment to identify your vulnerabilities."
   },
+  {
+    number: "02",
+    title: "Personalized Plan",
+    description: "Get a custom learning path tailored to your specific needs and risk profile."
+  },
+  {
+    number: "03",
+    title: "Learn & Practice",
+    description: "Complete interactive modules and use our tools to secure your digital life."
+  },
+  {
+    number: "04",
+    title: "Stay Protected",
+    description: "Join our community and receive ongoing updates on emerging threats."
+  }
+];
+
+const testimonials = [
+  {
+    name: "Amara",
+    role: "Small Business Owner",
+    content: "Safe Digital Africa helped me secure my business accounts. I feel so much more confident online now.",
+    location: "Lagos, Nigeria"
+  },
+  {
+    name: "Sarah",
+    role: "Journalist",
+    content: "As a journalist, digital privacy is crucial. This platform gave me the tools I needed to protect my sources.",
+    location: "Nairobi, Kenya"
+  },
+  {
+    name: "Zainab",
+    role: "Student",
+    content: "The courses are easy to understand and very practical. I've taught my friends how to stay safe too!",
+    location: "Accra, Ghana"
+  },
+  {
+    name: "Grace",
+    role: "Teacher",
+    content: "I use these resources to teach my students about online safety. It's an invaluable tool for educators.",
+    location: "Kampala, Uganda"
+  }
 ];
 
 const Home = () => {
   return (
-    <div className="w-full">
-      {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary via-primary/90 to-secondary min-h-[600px] flex items-center">
-        {/* Animated Background */}
-        <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.1),transparent)] opacity-50"></div>
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMC41Ii8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-20"></div>
+    <div className="flex flex-col min-h-screen">
+      <Hero />
+
+      {/* How It Works Section */}
+      <section className="py-20 bg-background">
+        <div className="container px-4 md:px-6">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl font-display mb-4">
+              Your Journey to Digital Safety
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              We've simplified digital security into four easy steps. Start your journey today.
+            </p>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            {steps.map((step, index) => (
+              <div key={index} className="relative p-6 rounded-2xl bg-muted/30 border border-border hover:border-primary/50 transition-colors group">
+                <div className="text-6xl font-bold text-primary/10 mb-4 font-display group-hover:text-primary/20 transition-colors">
+                  {step.number}
+                </div>
+                <h3 className="text-xl font-bold mb-2 font-display">{step.title}</h3>
+                <p className="text-muted-foreground">{step.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Why Choose Us Section */}
+      <section className="py-20 bg-muted/30 relative overflow-hidden">
+        <div className="absolute inset-0 bg-pattern-geometric opacity-[0.03]" />
+        <div className="container relative px-4 md:px-6">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl font-display mb-4">
+              Why Choose Safe Digital Africa?
+            </h2>
+            <p className="text-lg text-muted-foreground">
+              We provide a holistic approach to digital safety, combining expert knowledge with community support.
+            </p>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {features.map((feature, index) => (
+              <FeatureCard
+                key={index}
+                icon={feature.icon}
+                title={feature.title}
+                description={feature.description}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Community CTA Section */}
+      <section className="py-20 relative overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/community.png"
+            alt="Community of women"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-primary/90 mix-blend-multiply" />
         </div>
 
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="mx-auto max-w-4xl"
-          >
-            <h1 className="mb-6 text-4xl font-bold tracking-tight text-white md:text-6xl leading-tight">
-              Building Safer Digital Spaces for African Women & Girls
-            </h1>
-            
-            <p className="mb-8 text-xl text-white/95 md:text-2xl max-w-3xl leading-relaxed">
-              Empowering African women and girls with the tools, knowledge, and community to navigate the digital world safely and confidently. Take our 2-minute Safety Assessment to determine your immediate digital safety risk and learn essential digital safety skills.
+        <div className="container relative z-10 px-4 md:px-6 text-center text-white">
+          <div className="max-w-3xl mx-auto space-y-8">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl font-display">
+              Join Our Growing Community
+            </h2>
+            <p className="text-xl text-white/90 leading-relaxed">
+              Connect with thousands of women across Africa who are taking control of their digital lives. Share experiences, ask questions, and grow together.
             </p>
-            
-            <div className="flex flex-col items-start justify-start gap-4 sm:flex-row">
-              <Link to="/safety-assessment">
-                <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white group shadow-lg">
-                  Safety Assessment
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </Link>
-              <Link to="/safety-tools">
-                <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white shadow-lg">
-                  Explore Safety Tools
+            <div className="flex flex-col sm:flex-row justify-center gap-4">
+              <Button size="lg" className="bg-white text-primary hover:bg-white/90 text-lg px-8">
+                <MessageCircle className="mr-2 h-5 w-5" />
+                Join Facebook Group
+              </Button>
+              <Link to="/contact">
+                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 text-lg px-8">
+                  Contact Us
                 </Button>
               </Link>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* How It Works Preview */}
+      {/* Testimonials Section */}
       <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-12 text-center"
-          >
-            <h2 className="mb-4 text-3xl font-bold md:text-4xl text-foreground">How It Works</h2>
-            <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-              Our simple 4-step process is hassle-free and empowers you with knowledge, tools, and support.
-            </p>
-          </motion.div>
-
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4 mb-12">
-            {[
-              { num: "01", title: "Assess Your Safety", desc: "Complete our digital safety assessment" },
-              { num: "02", title: "Learn Skills", desc: "Access curated digital literacy courses" },
-              { num: "03", title: "Use Safety Tools", desc: "Implement practical protection measures" },
-              { num: "04", title: "Join Community", desc: "Connect with supportive network" },
-            ].map((step, index) => (
-              <motion.div
-                key={step.num}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="text-center p-6"
-              >
-                <div className="text-5xl font-bold text-primary/20 mb-4">{step.num}</div>
-                <h3 className="text-xl font-semibold mb-3 text-foreground">{step.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <Link to="/how-it-works">
-              <Button variant="outline" size="lg">
-                View Full Process
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-12 text-center"
-          >
-            <h2 className="mb-4 text-3xl font-bold md:text-4xl text-foreground">
-              Why Choose <span className="text-primary">SafeSpace Africa?</span>
+        <div className="container px-4 md:px-6">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl font-display mb-4">
+              Stories of Empowerment
             </h2>
-            <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-              Advanced technology makes comprehensive care for digital safety monitoring and empowerment.
+            <p className="text-lg text-muted-foreground">
+              Hear from women who have transformed their digital safety with our platform.
+              <br />
+              <span className="text-sm italic opacity-80">*Names have been changed to protect user privacy.</span>
             </p>
-          </motion.div>
-
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {features.map((feature, index) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="text-center p-8 rounded-lg bg-card hover:shadow-xl transition-all duration-300"
-              >
-                <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-6">
-                  <feature.icon className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3 text-foreground">{feature.title}</h3>
-                <p className="text-muted-foreground mb-4 leading-relaxed">{feature.description}</p>
-                <Link to={feature.path}>
-                  <Button variant="ghost" size="sm" className="group">
-                    Learn More
-                    <ArrowRight className="ml-2 h-3 w-3 transition-transform group-hover:translate-x-1" />
-                  </Button>
-                </Link>
-              </motion.div>
-            ))}
           </div>
-        </div>
-      </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="rounded-2xl bg-gradient-to-r from-primary to-accent p-12 md:p-16 text-center shadow-2xl"
-          >
-            <h2 className="mb-4 text-3xl font-bold text-white md:text-4xl">
-              Join Our Community Today
-            </h2>
-            <p className="mb-8 text-lg text-white/95 max-w-2xl mx-auto leading-relaxed">
-              Connect with thousands of African women and girls building safer digital spaces together. Join our supportive Facebook community for resources, support, and empowerment.
-            </p>
-            <a href="https://www.facebook.com/christine.kwamboka.39904" target="_blank" rel="noopener noreferrer">
-              <Button size="lg" className="bg-white text-primary hover:bg-white/90 shadow-lg hover:shadow-xl transition-all">
-                Join Our Facebook Community
-              </Button>
-            </a>
-          </motion.div>
+          <div className="max-w-5xl mx-auto">
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-2 md:-ml-4">
+                {testimonials.map((testimonial, index) => (
+                  <CarouselItem key={index} className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3">
+                    <div className="h-full p-6 rounded-2xl bg-card border border-border shadow-sm hover:shadow-md transition-shadow flex flex-col">
+                      <div className="flex-grow mb-6">
+                        <p className="text-muted-foreground italic leading-relaxed">"{testimonial.content}"</p>
+                      </div>
+                      <div className="flex items-center gap-4 mt-auto">
+                        <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                          {testimonial.name.charAt(0)}
+                        </div>
+                        <div>
+                          <p className="font-semibold text-foreground">{testimonial.name}</p>
+                          <p className="text-xs text-muted-foreground">{testimonial.role}, {testimonial.location}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <div className="hidden md:block">
+                <CarouselPrevious />
+                <CarouselNext />
+              </div>
+            </Carousel>
+          </div>
         </div>
       </section>
     </div>

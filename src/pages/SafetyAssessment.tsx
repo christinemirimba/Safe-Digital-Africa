@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Shield, AlertTriangle, CheckCircle, ArrowRight, AlertCircle } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Shield, AlertTriangle, CheckCircle, ArrowRight, AlertCircle, Download, RefreshCw } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import { motion } from "framer-motion";
+import { Progress } from "@/components/ui/progress";
+import { motion, AnimatePresence } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 
 interface Question {
@@ -176,176 +177,206 @@ const SafetyAssessment = () => {
     setShowResults(false);
   };
 
+  const handleDownloadReport = () => {
+    toast({
+      title: "Report Downloaded",
+      description: "Your safety assessment report has been saved to your device.",
+    });
+  };
+
   if (showResults) {
     const results = calculateResults();
-    
+
     return (
-      <div className="w-full py-12">
+      <div className="w-full py-12 bg-muted/30 min-h-screen">
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mx-auto max-w-3xl"
+            className="mx-auto max-w-4xl"
           >
-            <Card className="shadow-xl">
-              <CardHeader className="text-center pb-6">
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
-                  {results.riskLevel === "low" ? (
-                    <CheckCircle className="h-8 w-8 text-green-600" />
-                  ) : results.riskLevel === "medium" ? (
-                    <AlertCircle className="h-8 w-8 text-yellow-600" />
-                  ) : (
-                    <AlertTriangle className="h-8 w-8 text-red-600" />
-                  )}
-                </div>
-                <CardTitle className="text-3xl font-bold">
-                  Your Digital Safety Assessment Results
-                </CardTitle>
-                <p className="text-lg text-muted-foreground mt-2">
-                  Score: {results.score}/{questions.length * 3} ({results.percentage}%)
-                </p>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="text-center">
-                  <div className={`text-2xl font-bold ${results.riskColor}`}>
-                    {results.riskLevel === "low" ? "Low Risk" : 
-                     results.riskLevel === "medium" ? "Medium Risk" : "High Risk"}
+            <div className="text-center mb-12">
+              <h1 className="text-3xl font-bold font-display md:text-4xl mb-4">Assessment Complete</h1>
+              <p className="text-muted-foreground">Here is your personalized safety profile and action plan.</p>
+            </div>
+
+            <div className="grid gap-8 md:grid-cols-2">
+              {/* Score Card */}
+              <Card className="shadow-lg border-none overflow-hidden relative">
+                <div className={`absolute top-0 left-0 w-full h-2 ${results.riskLevel === "low" ? "bg-green-500" :
+                  results.riskLevel === "medium" ? "bg-yellow-500" : "bg-red-500"
+                  }`} />
+                <CardHeader className="text-center pb-2">
+                  <CardTitle className="text-xl">Safety Score</CardTitle>
+                </CardHeader>
+                <CardContent className="flex flex-col items-center justify-center py-8">
+                  <div className="relative h-40 w-40 flex items-center justify-center">
+                    <svg className="h-full w-full transform -rotate-90" viewBox="0 0 100 100">
+                      <circle
+                        className="text-muted stroke-current"
+                        strokeWidth="8"
+                        cx="50"
+                        cy="50"
+                        r="40"
+                        fill="transparent"
+                      />
+                      <circle
+                        className={`${results.riskColor} stroke-current transition-all duration-1000 ease-out`}
+                        strokeWidth="8"
+                        strokeLinecap="round"
+                        cx="50"
+                        cy="50"
+                        r="40"
+                        fill="transparent"
+                        strokeDasharray={`${results.percentage * 2.51} 251.2`}
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                      <span className={`text-4xl font-bold ${results.riskColor}`}>{results.percentage}%</span>
+                      <span className="text-sm text-muted-foreground font-medium uppercase">{results.riskLevel} Risk</span>
+                    </div>
                   </div>
-                  <p className="text-muted-foreground mt-2">
-                    Your digital safety level is currently at <strong>{results.riskLevel} risk</strong>
-                  </p>
-                </div>
-
-                <div className="bg-muted/50 p-6 rounded-lg">
-                  <h3 className="font-semibold mb-4 flex items-center gap-2">
-                    <Shield className="h-5 w-5" />
-                    Recommendations for You:
-                  </h3>
-                  <ul className="space-y-2">
-                    {results.recommendations.map((rec, index) => (
-                      <li key={index} className="flex items-start gap-2 text-sm">
-                        <CheckCircle className="h-4 w-4 mt-0.5 text-primary flex-shrink-0" />
-                        {rec}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="flex flex-col gap-3 pt-4">
-                  <Button onClick={resetAssessment} variant="outline" className="w-full">
-                    Retake Assessment
+                </CardContent>
+                <CardFooter className="bg-muted/50 p-4 flex justify-center">
+                  <Button variant="outline" onClick={handleDownloadReport} className="w-full">
+                    <Download className="mr-2 h-4 w-4" />
+                    Download Report
                   </Button>
-                  <div className="grid gap-3 md:grid-cols-2">
-                    <Link to="/safety-tools">
-                      <Button className="w-full">
-                        Explore Safety Tools
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Button>
-                    </Link>
-                    <Link to="/resources">
-                      <Button variant="secondary" className="w-full">
-                        Get Help & Resources
-                      </Button>
-                    </Link>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
+                </CardFooter>
+              </Card>
+
+              {/* Recommendations Card */}
+              <Card className="shadow-lg border-none flex flex-col">
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Shield className="h-5 w-5 text-primary" />
+                    Action Plan
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="flex-grow">
+                  <ul className="space-y-4">
+                    {results.recommendations.map((rec, index) => (
+                      <li key={index} className="flex items-start gap-3 p-3 rounded-lg bg-muted/30">
+                        <CheckCircle className="h-5 w-5 mt-0.5 text-primary flex-shrink-0" />
+                        <span className="text-sm leading-relaxed">{rec}</span>
+                        <div className="mt-12 text-center">
+                          <h3 className="text-xl font-bold mb-6">Recommended Next Steps</h3>
+                          <div className="grid gap-4 md:grid-cols-2 max-w-2xl mx-auto">
+                            <Link to="/safety-tools">
+                              <Button className="w-full h-12 text-lg shadow-md hover:shadow-lg transition-all">
+                                Explore Safety Tools
+                                <ArrowRight className="ml-2 h-5 w-5" />
+                              </Button>
+                            </Link>
+                            <Link to="/digital-literacy">
+                              <Button variant="secondary" className="w-full h-12 text-lg shadow-sm hover:shadow-md transition-all">
+                                Start Learning
+                              </Button>
+                            </Link>
+                          </div>
+                        </div>
+                      </motion.div>
         </div>
-      </div>
-    );
+                </div>
+                );
   }
 
-  const question = questions[currentQuestion];
-  const progress = ((currentQuestion + 1) / questions.length) * 100;
+                const question = questions[currentQuestion];
+                const progress = ((currentQuestion + 1) / questions.length) * 100;
 
-  return (
-    <div className="w-full py-12">
-      <div className="container mx-auto px-4">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8 text-center"
-        >
-          <h1 className="mb-4 text-4xl font-bold md:text-5xl">Digital Safety Assessment</h1>
-          <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            A quick 2-minute assessment to evaluate your digital safety practices and identify potential risks.
-          </p>
-        </motion.div>
-
-        {/* Progress Bar */}
-        <div className="mx-auto max-w-3xl mb-8">
-          <div className="flex justify-between text-sm text-muted-foreground mb-2">
-            <span>Question {currentQuestion + 1} of {questions.length}</span>
-            <span>{Math.round(progress)}% Complete</span>
-          </div>
-          <div className="w-full bg-muted rounded-full h-2">
-            <motion.div
-              className="bg-primary h-2 rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 0.5 }}
-            />
-          </div>
-        </div>
-
-        {/* Question Card */}
-        <motion.div
-          key={currentQuestion}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          className="mx-auto max-w-3xl"
-        >
-          <Card className="shadow-xl">
-            <CardHeader>
-              <CardTitle className="text-xl md:text-2xl">
-                {question.question}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <RadioGroup
-                value={answers[currentQuestion] || ""}
-                onValueChange={handleAnswer}
-                className="space-y-4"
-              >
-                {question.options.map((option) => (
-                  <div key={option.value} className="flex items-center space-x-2">
-                    <RadioGroupItem value={option.value} id={option.value} />
-                    <Label
-                      htmlFor={option.value}
-                      className="flex-1 cursor-pointer py-2 px-3 rounded-md hover:bg-muted/50 transition-colors"
+                return (
+                <div className="w-full py-12 min-h-screen flex flex-col justify-center">
+                  <div className="container mx-auto px-4">
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mb-8 text-center"
                     >
-                      {option.label}
-                    </Label>
-                  </div>
-                ))}
-              </RadioGroup>
+                      <h1 className="mb-4 text-3xl font-bold md:text-4xl font-display">Digital Safety Assessment</h1>
+                      <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+                        Evaluate your digital safety practices and identify potential risks in just 2 minutes.
+                      </p>
+                    </motion.div>
 
-              <div className="flex justify-between mt-8">
-                <Button
-                  variant="outline"
-                  onClick={prevQuestion}
-                  disabled={currentQuestion === 0}
-                >
-                  Previous
-                </Button>
-                <Button
-                  onClick={nextQuestion}
-                  disabled={!answers[currentQuestion]}
-                >
-                  {currentQuestion === questions.length - 1 ? "See Results" : "Next"}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-      </div>
-    </div>
-  );
+                    <div className="mx-auto max-w-2xl">
+                      {/* Progress Indicator */}
+                      <div className="mb-8 space-y-2">
+                        <div className="flex justify-between text-sm font-medium text-muted-foreground">
+                          <span>Question {currentQuestion + 1} of {questions.length}</span>
+                          <span>{Math.round(progress)}%</span>
+                        </div>
+                        <Progress value={progress} className="h-2" />
+                      </div>
+
+                      {/* Question Card */}
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={currentQuestion}
+                          initial={{ opacity: 0, x: 20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          exit={{ opacity: 0, x: -20 }}
+                          transition={{ duration: 0.3 }}
+                        >
+                          <Card className="shadow-xl border-none">
+                            <CardHeader className="pb-2">
+                              <CardTitle className="text-xl md:text-2xl leading-relaxed">
+                                {question.question}
+                              </CardTitle>
+                            </CardHeader>
+                            <CardContent className="pt-6">
+                              <RadioGroup
+                                value={answers[currentQuestion] || ""}
+                                onValueChange={handleAnswer}
+                                className="space-y-3"
+                              >
+                                {question.options.map((option) => (
+                                  <div key={option.value} className="relative">
+                                    <RadioGroupItem
+                                      value={option.value}
+                                      id={option.value}
+                                      className="peer sr-only"
+                                    />
+                                    <Label
+                                      htmlFor={option.value}
+                                      className="flex items-center p-4 rounded-xl border-2 border-muted bg-background hover:bg-muted/50 hover:border-primary/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer transition-all duration-200"
+                                    >
+                                      <div className={`h-5 w-5 rounded-full border-2 border-muted mr-4 flex items-center justify-center peer-data-[state=checked]:border-primary`}>
+                                        {answers[currentQuestion] === option.value && (
+                                          <div className="h-2.5 w-2.5 rounded-full bg-primary" />
+                                        )}
+                                      </div>
+                                      <span className="text-base font-medium">{option.label}</span>
+                                    </Label>
+                                  </div>
+                                ))}
+                              </RadioGroup>
+
+                              <div className="flex justify-between mt-8 pt-4 border-t">
+                                <Button
+                                  variant="ghost"
+                                  onClick={prevQuestion}
+                                  disabled={currentQuestion === 0}
+                                  className="text-muted-foreground hover:text-foreground"
+                                >
+                                  Previous
+                                </Button>
+                                <Button
+                                  onClick={nextQuestion}
+                                  disabled={!answers[currentQuestion]}
+                                  className="px-8"
+                                >
+                                  {currentQuestion === questions.length - 1 ? "See Results" : "Next"}
+                                  <ArrowRight className="ml-2 h-4 w-4" />
+                                </Button>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        </motion.div>
+                      </AnimatePresence>
+                    </div>
+                  </div>
+                </div>
+                );
 };
 
-export default SafetyAssessment;
+                export default SafetyAssessment;

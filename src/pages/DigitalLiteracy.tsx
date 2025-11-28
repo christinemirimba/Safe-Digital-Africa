@@ -1,45 +1,70 @@
-import { BookOpen, Video, FileText, CheckCircle2 } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { CourseViewer } from "@/components/CourseViewer";
 import { courseData } from "@/data/courseData";
+import { CourseCard } from "@/components/CustomCards";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Trophy, Flame, Target } from "lucide-react";
 
 const courses = [
   {
     title: "Online Privacy Fundamentals",
+    description: "Learn how to secure your personal data, manage privacy settings, and browse safely.",
     level: "Beginner",
     duration: "2 hours",
-    icon: BookOpen,
-    topics: ["Password security", "Privacy settings", "Data protection", "Secure browsing"],
+    modulesCount: 4,
+    thumbnail: "/images/course-privacy.png",
+    progress: 45,
+    isLocked: false,
+    link: "/digital-literacy/privacy"
   },
   {
     title: "Social Media Safety",
+    description: "Master the art of safe social networking, identifying fake profiles, and handling harassment.",
     level: "Beginner",
     duration: "1.5 hours",
-    icon: Video,
-    topics: ["Profile privacy", "Content sharing", "Recognizing threats", "Reporting abuse"],
+    modulesCount: 3,
+    thumbnail: "/images/course-social.png",
+    progress: 0,
+    isLocked: false,
+    link: "/digital-literacy/social-media"
   },
   {
     title: "Digital Communication Security",
+    description: "Secure your emails, messages, and calls with encryption and best practices.",
     level: "Intermediate",
     duration: "3 hours",
-    icon: FileText,
-    topics: ["Encrypted messaging", "Email security", "Video call safety", "File sharing"],
+    modulesCount: 5,
+    thumbnail: "/images/course-communication.png",
+    progress: 0,
+    isLocked: true,
+    link: "/digital-literacy/communication"
   },
   {
     title: "Identifying Online Threats",
+    description: "Learn to spot phishing attempts, scams, and malware before they affect you.",
     level: "Intermediate",
     duration: "2.5 hours",
-    icon: BookOpen,
-    topics: ["Phishing attacks", "Scams", "Cyberbullying", "Fake profiles"],
+    modulesCount: 4,
+    thumbnail: "/images/course-threats.png",
+    progress: 0,
+    isLocked: true,
+    link: "/digital-literacy/threats"
   },
 ];
 
 const DigitalLiteracy = () => {
   const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
+
+  // Handle course selection (mock implementation for now)
+  const handleCourseSelect = (courseTitle: string) => {
+    // In a real app, this would navigate to the course page or open the viewer
+    // For now, we'll check if it matches existing data
+    if (courseData[courseTitle as keyof typeof courseData]) {
+      setSelectedCourse(courseTitle);
+    }
+  };
 
   if (selectedCourse && courseData[selectedCourse as keyof typeof courseData]) {
     return (
@@ -52,63 +77,56 @@ const DigitalLiteracy = () => {
   }
 
   return (
-    <div className="w-full py-12">
-      <div className="container mx-auto px-4">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-12 text-center"
-        >
-          <h1 className="mb-4 text-4xl font-bold md:text-5xl">Digital Literacy Hub</h1>
-          <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-            Welcome to your safe space for learning digital skills. Take your time, learn at your own pace, 
-            and know that you're not alone in this journey. Our courses are designed specifically for 
-            women and girls across Africa.
-          </p>
-        </motion.div>
+    <div className="min-h-screen bg-background pb-20">
+      {/* Dashboard Header */}
+      <div className="bg-primary text-primary-foreground py-12">
+        <div className="container px-4 md:px-6">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+            <div>
+              <h1 className="text-3xl font-bold font-display mb-2">Welcome back, Learner!</h1>
+              <p className="text-primary-foreground/80">You're making great progress on your digital safety journey.</p>
+            </div>
+            <div className="flex gap-4">
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex items-center gap-3">
+                <div className="h-10 w-10 rounded-full bg-accent/20 flex items-center justify-center text-accent">
+                  <Flame className="h-6 w-6" />
+                </div>
+                <div>
+                  <p className="text-xs text-primary-foreground/60 uppercase font-semibold">Streak</p>
+                  <p className="font-bold text-xl">3 Days</p>
+                </div>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 flex items-center gap-3">
+                <div className="h-10 w-10 rounded-full bg-secondary/20 flex items-center justify-center text-secondary">
+                  <Trophy className="h-6 w-6" />
+                </div>
+                <div>
+                  <p className="text-xs text-primary-foreground/60 uppercase font-semibold">Points</p>
+                  <p className="font-bold text-xl">450</p>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        {/* Quick Tips */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-12"
-        >
-          <Card className="border-l-4 border-l-secondary bg-secondary/5">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <CheckCircle2 className="h-6 w-6 text-secondary" />
-                Quick Safety Tips
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul className="grid gap-3 md:grid-cols-2">
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="mt-1 h-4 w-4 flex-shrink-0 text-secondary" />
-                  <span>Use strong, unique passwords for every account</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="mt-1 h-4 w-4 flex-shrink-0 text-secondary" />
-                  <span>Enable two-factor authentication wherever possible</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="mt-1 h-4 w-4 flex-shrink-0 text-secondary" />
-                  <span>Be cautious about sharing personal information online</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <CheckCircle2 className="mt-1 h-4 w-4 flex-shrink-0 text-secondary" />
-                  <span>Verify sources before clicking links or downloading files</span>
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-        </motion.div>
+          {/* Current Progress */}
+          <div className="mt-8 bg-white/5 rounded-2xl p-6 border border-white/10">
+            <div className="flex justify-between items-end mb-2">
+              <div>
+                <p className="text-sm font-medium text-primary-foreground/80 mb-1">Overall Progress</p>
+                <p className="text-2xl font-bold">12% Completed</p>
+              </div>
+              <Target className="h-8 w-8 text-secondary opacity-50" />
+            </div>
+            <Progress value={12} className="h-3 bg-white/10" />
+          </div>
+        </div>
+      </div>
 
-        {/* Courses Grid */}
-        <div className="mb-12">
-          <h2 className="mb-6 text-2xl font-bold">Available Courses</h2>
-          <div className="grid gap-6 md:grid-cols-2">
+      <div className="container px-4 md:px-6 py-12">
+        {/* Course Catalog */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold font-display mb-6">Course Catalog</h2>
+          <div className="grid gap-8 md:grid-cols-2">
             {courses.map((course, index) => (
               <motion.div
                 key={course.title}
@@ -116,69 +134,45 @@ const DigitalLiteracy = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
+                onClick={() => !course.isLocked && handleCourseSelect(course.title)}
+                className={!course.isLocked ? "cursor-pointer" : ""}
               >
-                <Card className="h-full shadow-card transition-all duration-300 hover:shadow-card-hover">
-                  <CardHeader>
-                    <div className="mb-4 flex items-start justify-between">
-                      <course.icon className="h-10 w-10 text-primary" />
-                      <Badge variant={course.level === "Beginner" ? "secondary" : "default"}>
-                        {course.level}
-                      </Badge>
-                    </div>
-                    <CardTitle>{course.title}</CardTitle>
-                    <CardDescription className="text-base">{course.duration}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="mb-3 text-sm font-semibold">What you'll learn:</p>
-                    <ul className="mb-4 space-y-2">
-                      {course.topics.map((topic) => (
-                        <li key={topic} className="flex items-start gap-2 text-sm text-muted-foreground">
-                          <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
-                          {topic}
-                        </li>
-                      ))}
-                    </ul>
-                    <Button 
-                      className="w-full transition-smooth"
-                      onClick={() => setSelectedCourse(course.title)}
-                    >
-                      Start Learning
-                    </Button>
-                  </CardContent>
-                </Card>
+                <CourseCard
+                  title={course.title}
+                  description={course.description}
+                  thumbnail={course.thumbnail}
+                  progress={course.progress}
+                  isLocked={course.isLocked}
+                  modulesCount={course.modulesCount}
+                  duration={course.duration}
+                  link="#" // We handle click on the wrapper div for now to use the existing viewer
+                />
               </motion.div>
             ))}
           </div>
         </div>
 
-        {/* Additional Resources */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-        >
-          <Card className="bg-gradient-to-br from-primary/10 to-secondary/10">
-            <CardHeader>
-              <CardTitle>Support When You Need It</CardTitle>
-              <CardDescription className="text-base">
-                Take your time learning. When you're ready, our supportive team is here to help you succeed in your digital journey.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col gap-4 sm:flex-row">
-                <Button variant="default" className="transition-smooth">
-                  Request Support (Optional)
-                </Button>
-                <Button variant="outline" className="transition-smooth">
-                  Access Resources
-                </Button>
-              </div>
-              <p className="text-xs text-muted-foreground mt-3">
-                Remember: You're learning at your own pace, and that's perfectly okay. 💚
-              </p>
-            </CardContent>
-          </Card>
-        </motion.div>
+        {/* Learning Path Visualization (Simplified) */}
+        <div className="mt-16">
+          <h2 className="text-2xl font-bold font-display mb-8 text-center">Your Learning Path</h2>
+          <div className="relative max-w-4xl mx-auto">
+            <div className="absolute top-1/2 left-0 w-full h-1 bg-muted -translate-y-1/2 hidden md:block" />
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 relative z-10">
+              {courses.map((course, index) => (
+                <div key={index} className="flex flex-col items-center text-center group">
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center border-4 transition-all duration-300 ${index === 0 ? "bg-primary border-primary text-white" :
+                    "bg-background border-muted text-muted-foreground"
+                    }`}>
+                    {index + 1}
+                  </div>
+                  <p className={`mt-4 font-semibold ${index === 0 ? "text-primary" : "text-muted-foreground"}`}>
+                    {course.title}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

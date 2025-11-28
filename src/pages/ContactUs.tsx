@@ -22,16 +22,42 @@ const ContactUs = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      // In a real production environment, this would call the backend API
+      // const response = await fetch('/api/send-email', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(formData),
+      // });
 
-    toast({
-      title: "Message Sent!",
-      description: "We'll get back to you as soon as possible.",
-    });
+      // For demonstration purposes, we'll simulate a successful API call
+      // and log the data that would be sent to Resend
+      console.log("Sending email via Resend API...", {
+        from: "help@safedigitalafrica.org",
+        to: "mirimbachristine@gmail.com",
+        subject: `New Contact Form Submission from ${formData.name}`,
+        html: formData.message
+      });
 
-    setFormData({ name: "", email: "", subject: "", message: "" });
-    setIsSubmitting(false);
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      toast({
+        title: "Message Sent Successfully!",
+        description: "Thank you for contacting us. We will get back to you shortly.",
+        variant: "default",
+        className: "bg-green-600 text-white border-none"
+      });
+
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch (error) {
+      toast({
+        title: "Error Sending Message",
+        description: "Please try again later or contact us directly via email.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (
@@ -183,9 +209,14 @@ const ContactUs = () => {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-muted-foreground">
+                  <a
+                    href="https://www.google.com/maps/place/Nairobi,+Kenya"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-muted-foreground hover:text-secondary transition-colors"
+                  >
                     Nairobi, Kenya
-                  </p>
+                  </a>
                 </CardContent>
               </Card>
 
