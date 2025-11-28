@@ -19,6 +19,9 @@ import Settings from "./pages/Settings";
 import FAQ from "./pages/FAQ";
 import ContactUs from "./pages/ContactUs";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Community from "./pages/Community";
+import IncidentReporting from "./pages/IncidentReporting";
+import Analytics from "./pages/admin/Analytics";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -41,6 +44,9 @@ const App = () => (
               <Route path="/password-strength" element={<PasswordStrength />} />
               <Route path="/digital-footprint-analyzer" element={<DigitalFootprintAnalyzer />} />
               <Route path="/resources" element={<Resources />} />
+              <Route path="/community" element={<Community />} />
+              <Route path="/report-incident" element={<IncidentReporting />} />
+              <Route path="/admin/analytics" element={<Analytics />} />
               <Route path="/about" element={<About />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/faq" element={<FAQ />} />

@@ -134,14 +134,15 @@ const Home = () => {
       </section>
 
       {/* Why Choose Us Section */}
-      <section className="py-20 bg-muted/30 relative overflow-hidden">
-        <div className="absolute inset-0 bg-pattern-geometric opacity-[0.03]" />
+      <section className="py-20 bg-gradient-to-br from-primary/5 via-muted/40 to-secondary/5 relative overflow-hidden">
+        <div className="absolute inset-0 bg-pattern-geometric opacity-[0.08]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/20 to-transparent" />
         <div className="container relative px-4 md:px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl font-display mb-4">
               Why Choose Safe Digital Africa?
             </h2>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-muted-foreground font-medium">
               We provide a holistic approach to digital safety, combining expert knowledge with community support.
             </p>
           </div>
@@ -186,6 +187,12 @@ const Home = () => {
               <Link to="/contact">
                 <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 text-lg px-8">
                   Contact Us
+                </Button>
+              </Link>
+              <Link to="/contact">
+                {/* Responsive Partner Button: Hidden on small mobile, visible on larger screens, or stacked */}
+                <Button size="lg" variant="secondary" className="bg-accent text-accent-foreground hover:bg-accent/90 text-lg px-8 w-full sm:w-auto">
+                  Become a Partner
                 </Button>
               </Link>
             </div>

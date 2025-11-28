@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { useToast } from "@/hooks/use-toast";
+import { ChatDisclaimerModal } from "@/components/ChatDisclaimerModal";
 
 const SafetyTools = () => {
   const [activeTool, setActiveTool] = useState<string | null>(null);
@@ -24,6 +25,8 @@ const SafetyTools = () => {
   const [isChecking, setIsChecking] = useState(false);
   const [checkResult, setCheckResult] = useState<any>(null);
   const [checklistPlatform, setChecklistPlatform] = useState("Facebook");
+  const [isChatModalOpen, setIsChatModalOpen] = useState(false);
+  const [isChatActive, setIsChatActive] = useState(false);
   const { toast } = useToast();
 
   const tools = [
@@ -97,6 +100,33 @@ const SafetyTools = () => {
         breaches: Math.random() > 0.3 ? ["Collection #1", "Canva 2019"] : [],
       });
     }, 1500);
+  };
+
+  const handleStartLiveChat = () => {
+    setIsChatModalOpen(true);
+  };
+
+  const handleChatAccept = () => {
+    setIsChatModalOpen(false);
+    setIsChatActive(true);
+
+    // Inject Tawk.to script
+    // Note: Replace 'YOUR_PROPERTY_ID/YOUR_WIDGET_ID' with your actual Tawk.to ID
+    const script = document.createElement("script");
+    script.async = true;
+    script.src = 'https://embed.tawk.to/YOUR_PROPERTY_ID/default';
+    script.charset = 'UTF-8';
+    script.setAttribute('crossorigin', '*');
+    document.body.appendChild(script);
+
+    toast({
+      title: "Connecting to Support...",
+      description: "Chat widget is loading... Please wait.",
+    });
+  };
+
+  const handleChatDecline = () => {
+    setIsChatModalOpen(false);
   };
 
   const renderToolContent = () => {
@@ -315,30 +345,33 @@ const SafetyTools = () => {
       case "safe-browsing":
         return (
           <div className="space-y-4">
-            <div className="space-y-2">
-              <h4 className="font-semibold text-red-600 flex items-center gap-2">
-                <AlertCircle className="h-4 w-4" />
-                Red Flags of Phishing
+            <div className="space-y-3">
+              <h4 className="font-semibold flex items-center gap-2 text-primary">
+                <Shield className="h-4 w-4" />
+                Proactive Security Actions
               </h4>
-              <ul className="space-y-2 text-sm">
-                <li className="flex items-start gap-2 bg-red-50 p-2 rounded">
-                  <X className="h-4 w-4 text-red-600 mt-0.5" />
-                  <span>Urgent language ("Act now or account suspended!")</span>
+              <ol className="list-decimal list-inside space-y-3 text-sm">
+                <li className="p-2 bg-muted/30 rounded-lg">
+                  <span className="font-medium">Verify URL Authenticity:</span> Always check the address bar for "https://" and the correct domain spelling before entering data.
                 </li>
-                <li className="flex items-start gap-2 bg-red-50 p-2 rounded">
-                  <X className="h-4 w-4 text-red-600 mt-0.5" />
-                  <span>Suspicious sender email (e.g., support@paypal-security-alert.com)</span>
+                <li className="p-2 bg-muted/30 rounded-lg">
+                  <span className="font-medium">Unknown Downloads:</span> Never download attachments from unknown senders. If unsure, contact the sender through a different channel.
                 </li>
-                <li className="flex items-start gap-2 bg-red-50 p-2 rounded">
-                  <X className="h-4 w-4 text-red-600 mt-0.5" />
-                  <span>Generic greetings ("Dear Customer")</span>
+                <li className="p-2 bg-muted/30 rounded-lg">
+                  <span className="font-medium">Password Management:</span> Use a password manager to generate and store unique, complex passwords for every site.
                 </li>
-              </ul>
+                <li className="p-2 bg-muted/30 rounded-lg">
+                  <span className="font-medium">Update Browser:</span> Keep your web browser updated to the latest version to ensure you have the newest security patches.
+                </li>
+              </ol>
             </div>
-            <div className="bg-green-50 p-3 rounded-lg border border-green-200">
-              <h4 className="font-semibold text-green-800 mb-1">Pro Tip</h4>
+            <div className="bg-green-50 p-3 rounded-lg border border-green-200 mt-2">
+              <h4 className="font-semibold text-green-800 mb-1 flex items-center gap-2">
+                <Check className="h-4 w-4" />
+                Empowerment Tip
+              </h4>
               <p className="text-sm text-green-700">
-                Always hover over links before clicking to see the actual URL destination. When in doubt, type the website address directly into your browser.
+                You are in control. If a website feels "off" or asks for too much information, trust your instincts and leave immediately.
               </p>
             </div>
           </div>
@@ -383,14 +416,18 @@ const SafetyTools = () => {
                 If you're experiencing immediate danger or harassment, please contact emergency services or our 24/7 support hotline.
               </p>
               <div className="flex flex-col gap-3 sm:flex-row">
-                <Button variant="default" className="bg-accent hover:bg-accent/90 w-full sm:w-auto">
-                  Call Emergency Hotline (116)
-                </Button>
-                <a href="mailto:mirimbachristine@gmail.com" className="w-full sm:w-auto">
-                  <Button variant="outline" className="w-full">
-                    Contact Support Team
+                <a href="tel:116" className="w-full sm:w-auto">
+                  <Button variant="default" className="bg-accent hover:bg-accent/90 w-full">
+                    Call Emergency Hotline (116)
                   </Button>
                 </a>
+                <Button
+                  variant="outline"
+                  className="w-full sm:w-auto"
+                  onClick={handleStartLiveChat}
+                >
+                  Get Live Support
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -436,6 +473,13 @@ const SafetyTools = () => {
             </div>
           </DialogContent>
         </Dialog>
+
+        {/* Chat Disclaimer Modal */}
+        <ChatDisclaimerModal
+          open={isChatModalOpen}
+          onAccept={handleChatAccept}
+          onDecline={handleChatDecline}
+        />
       </div>
     </div>
   );

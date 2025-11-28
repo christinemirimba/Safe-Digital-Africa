@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Shield, AlertTriangle, CheckCircle, ArrowRight, AlertCircle, Download, RefreshCw } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
@@ -89,6 +89,15 @@ const SafetyAssessment = () => {
   const [showResults, setShowResults] = useState(false);
   const { toast } = useToast();
 
+  useEffect(() => {
+    const savedResults = localStorage.getItem("safetyAssessmentResults");
+    if (savedResults) {
+      const parsed = JSON.parse(savedResults);
+      setAnswers(parsed.answers);
+      setShowResults(true);
+    }
+  }, []);
+
   const handleAnswer = (value: string) => {
     setAnswers({ ...answers, [currentQuestion]: value });
   };
@@ -98,6 +107,10 @@ const SafetyAssessment = () => {
       setCurrentQuestion(currentQuestion + 1);
     } else {
       setShowResults(true);
+      localStorage.setItem("safetyAssessmentResults", JSON.stringify({
+        answers,
+        completedAt: new Date().toISOString()
+      }));
     }
   };
 
@@ -175,6 +188,7 @@ const SafetyAssessment = () => {
     setCurrentQuestion(0);
     setAnswers({});
     setShowResults(false);
+    localStorage.removeItem("safetyAssessmentResults");
   };
 
   const handleDownloadReport = () => {

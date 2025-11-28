@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { ChatWidget } from "./ChatWidget";
 import { motion } from "framer-motion";
 
 interface LayoutProps {
@@ -20,6 +21,7 @@ export const Layout = ({ children }: LayoutProps) => {
         {children}
       </motion.main>
       <Footer />
+      <ChatWidget />
     </div>
   );
 };

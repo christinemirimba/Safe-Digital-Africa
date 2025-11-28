@@ -15,15 +15,15 @@ interface FeatureCardProps {
 
 export const FeatureCard = ({ icon, title, description }: FeatureCardProps) => {
     return (
-        <Card className="h-full border-none shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 bg-white/50 backdrop-blur-sm">
+        <Card className="h-full border border-border/40 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] bg-white dark:bg-card group">
             <CardHeader>
-                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary mb-4">
+                <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-primary/90 to-primary/70 flex items-center justify-center text-white mb-4 shadow-lg shadow-primary/20 group-hover:shadow-xl group-hover:shadow-primary/30 transition-all duration-300 group-hover:scale-110">
                     {icon}
                 </div>
-                <CardTitle className="text-xl font-display">{title}</CardTitle>
+                <CardTitle className="text-xl font-display font-bold group-hover:text-primary transition-colors">{title}</CardTitle>
             </CardHeader>
             <CardContent>
-                <CardDescription className="text-base leading-relaxed">
+                <CardDescription className="text-base leading-relaxed text-muted-foreground/90 font-medium">
                     {description}
                 </CardDescription>
             </CardContent>
