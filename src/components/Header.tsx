@@ -113,17 +113,19 @@ export const Header = () => {
                   to="/about"
                   onClick={() => setIsOpen(false)}
                   className="text-lg font-medium text-muted-foreground hover:text-primary"
+                >
+                  About Us
                 </Link>
-              <div className="h-px bg-border my-2" />
-              <div className="flex items-center justify-between py-2">
-                <span className="text-sm font-medium text-muted-foreground">Theme</span>
-                <ThemeToggle />
+                <div className="h-px bg-border my-2" />
+                <div className="flex items-center justify-between py-2">
+                  <span className="text-sm font-medium text-muted-foreground">Theme</span>
+                  <ThemeToggle />
+                </div>
               </div>
-            </div>
-          </SheetContent>
-        </Sheet>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
-    </div>
     </header >
   );
 };

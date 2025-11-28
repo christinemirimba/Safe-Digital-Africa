@@ -253,130 +253,148 @@ const SafetyAssessment = () => {
                     Action Plan
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="flex-grow">
-                  <ul className="space-y-4">
+                <CardContent className="flex-grow space-y-6">
+                  <ul className="space-y-3">
                     {results.recommendations.map((rec, index) => (
                       <li key={index} className="flex items-start gap-3 p-3 rounded-lg bg-muted/30">
                         <CheckCircle className="h-5 w-5 mt-0.5 text-primary flex-shrink-0" />
                         <span className="text-sm leading-relaxed">{rec}</span>
-                        <div className="mt-12 text-center">
-                          <h3 className="text-xl font-bold mb-6">Recommended Next Steps</h3>
-                          <div className="grid gap-4 md:grid-cols-2 max-w-2xl mx-auto">
-                            <Link to="/safety-tools">
-                              <Button className="w-full h-12 text-lg shadow-md hover:shadow-lg transition-all">
-                                Explore Safety Tools
-                                <ArrowRight className="ml-2 h-5 w-5" />
-                              </Button>
-                            </Link>
-                            <Link to="/digital-literacy">
-                              <Button variant="secondary" className="w-full h-12 text-lg shadow-sm hover:shadow-md transition-all">
-                                Start Learning
-                              </Button>
-                            </Link>
-                          </div>
-                        </div>
-                      </motion.div>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="pt-4 border-t">
+                    <Button
+                      onClick={resetAssessment}
+                      variant="secondary"
+                      className="w-full"
+                    >
+                      <RefreshCw className="mr-2 h-4 w-4" />
+                      Retake Quiz
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="mt-12 text-center">
+              <h3 className="text-xl font-bold mb-6">Recommended Next Steps</h3>
+              <div className="grid gap-4 md:grid-cols-2 max-w-2xl mx-auto">
+                <Link to="/safety-tools">
+                  <Button className="w-full h-12 text-lg shadow-md hover:shadow-lg transition-all">
+                    Explore Safety Tools
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+                <Link to="/digital-literacy">
+                  <Button variant="outline" className="w-full h-12 text-lg shadow-sm hover:shadow-md transition-all">
+                    Start Learning
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </motion.div>
         </div>
-                </div>
-                );
+      </div>
+    );
   }
 
-                const question = questions[currentQuestion];
-                const progress = ((currentQuestion + 1) / questions.length) * 100;
+  const question = questions[currentQuestion];
+  const progress = ((currentQuestion + 1) / questions.length) * 100;
 
-                return (
-                <div className="w-full py-12 min-h-screen flex flex-col justify-center">
-                  <div className="container mx-auto px-4">
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="mb-8 text-center"
-                    >
-                      <h1 className="mb-4 text-3xl font-bold md:text-4xl font-display">Digital Safety Assessment</h1>
-                      <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
-                        Evaluate your digital safety practices and identify potential risks in just 2 minutes.
-                      </p>
-                    </motion.div>
+  return (
+    <div className="w-full py-12 min-h-screen flex flex-col justify-center">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8 text-center"
+        >
+          <h1 className="mb-4 text-3xl font-bold md:text-4xl font-display">Digital Safety Assessment</h1>
+          <p className="mx-auto max-w-2xl text-lg text-muted-foreground">
+            Evaluate your digital safety practices and identify potential risks in just 2 minutes.
+          </p>
+        </motion.div>
 
-                    <div className="mx-auto max-w-2xl">
-                      {/* Progress Indicator */}
-                      <div className="mb-8 space-y-2">
-                        <div className="flex justify-between text-sm font-medium text-muted-foreground">
-                          <span>Question {currentQuestion + 1} of {questions.length}</span>
-                          <span>{Math.round(progress)}%</span>
-                        </div>
-                        <Progress value={progress} className="h-2" />
-                      </div>
+        <div className="mx-auto max-w-2xl">
+          {/* Progress Indicator */}
+          <div className="mb-8 space-y-2">
+            <div className="flex justify-between text-sm font-medium text-muted-foreground">
+              <span>Question {currentQuestion + 1} of {questions.length}</span>
+              <span>{Math.round(progress)}%</span>
+            </div>
+            <Progress value={progress} className="h-2" />
+          </div>
 
-                      {/* Question Card */}
-                      <AnimatePresence mode="wait">
-                        <motion.div
-                          key={currentQuestion}
-                          initial={{ opacity: 0, x: 20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          exit={{ opacity: 0, x: -20 }}
-                          transition={{ duration: 0.3 }}
+          {/* Question Card */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentQuestion}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Card className="shadow-xl border-none">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-xl md:text-2xl leading-relaxed">
+                    {question.question}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="pt-6">
+                  <RadioGroup
+                    value={answers[currentQuestion] || ""}
+                    onValueChange={handleAnswer}
+                    className="space-y-3"
+                  >
+                    {question.options.map((option) => (
+                      <div key={option.value} className="relative">
+                        <RadioGroupItem
+                          value={option.value}
+                          id={option.value}
+                          className="peer sr-only"
+                        />
+                        <Label
+                          htmlFor={option.value}
+                          className="flex items-center p-4 rounded-xl border-2 border-muted bg-background hover:bg-muted/50 hover:border-primary/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer transition-all duration-200"
                         >
-                          <Card className="shadow-xl border-none">
-                            <CardHeader className="pb-2">
-                              <CardTitle className="text-xl md:text-2xl leading-relaxed">
-                                {question.question}
-                              </CardTitle>
-                            </CardHeader>
-                            <CardContent className="pt-6">
-                              <RadioGroup
-                                value={answers[currentQuestion] || ""}
-                                onValueChange={handleAnswer}
-                                className="space-y-3"
-                              >
-                                {question.options.map((option) => (
-                                  <div key={option.value} className="relative">
-                                    <RadioGroupItem
-                                      value={option.value}
-                                      id={option.value}
-                                      className="peer sr-only"
-                                    />
-                                    <Label
-                                      htmlFor={option.value}
-                                      className="flex items-center p-4 rounded-xl border-2 border-muted bg-background hover:bg-muted/50 hover:border-primary/50 peer-data-[state=checked]:border-primary peer-data-[state=checked]:bg-primary/5 cursor-pointer transition-all duration-200"
-                                    >
-                                      <div className={`h-5 w-5 rounded-full border-2 border-muted mr-4 flex items-center justify-center peer-data-[state=checked]:border-primary`}>
-                                        {answers[currentQuestion] === option.value && (
-                                          <div className="h-2.5 w-2.5 rounded-full bg-primary" />
-                                        )}
-                                      </div>
-                                      <span className="text-base font-medium">{option.label}</span>
-                                    </Label>
-                                  </div>
-                                ))}
-                              </RadioGroup>
+                          <div className={`h-5 w-5 rounded-full border-2 border-muted mr-4 flex items-center justify-center peer-data-[state=checked]:border-primary`}>
+                            {answers[currentQuestion] === option.value && (
+                              <div className="h-2.5 w-2.5 rounded-full bg-primary" />
+                            )}
+                          </div>
+                          <span className="text-base font-medium">{option.label}</span>
+                        </Label>
+                      </div>
+                    ))}
+                  </RadioGroup>
 
-                              <div className="flex justify-between mt-8 pt-4 border-t">
-                                <Button
-                                  variant="ghost"
-                                  onClick={prevQuestion}
-                                  disabled={currentQuestion === 0}
-                                  className="text-muted-foreground hover:text-foreground"
-                                >
-                                  Previous
-                                </Button>
-                                <Button
-                                  onClick={nextQuestion}
-                                  disabled={!answers[currentQuestion]}
-                                  className="px-8"
-                                >
-                                  {currentQuestion === questions.length - 1 ? "See Results" : "Next"}
-                                  <ArrowRight className="ml-2 h-4 w-4" />
-                                </Button>
-                              </div>
-                            </CardContent>
-                          </Card>
-                        </motion.div>
-                      </AnimatePresence>
-                    </div>
+                  <div className="flex justify-between mt-8 pt-4 border-t">
+                    <Button
+                      variant="ghost"
+                      onClick={prevQuestion}
+                      disabled={currentQuestion === 0}
+                      className="text-muted-foreground hover:text-foreground"
+                    >
+                      Previous
+                    </Button>
+                    <Button
+                      onClick={nextQuestion}
+                      disabled={!answers[currentQuestion]}
+                      className="px-8"
+                    >
+                      {currentQuestion === questions.length - 1 ? "See Results" : "Next"}
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
                   </div>
-                </div>
-                );
+                </CardContent>
+              </Card>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  );
 };
 
-                export default SafetyAssessment;
+export default SafetyAssessment;
