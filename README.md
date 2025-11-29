@@ -13,9 +13,13 @@
   </p>
 
   <p>
-    <a href="https://safespace.africa"><img src="https://img.shields.io/badge/Website-safespace.africa-0d9488?style=for-the-badge" alt="Website"></a>
+    <a href="https://safe-digital-space-africa.vercel.app/">
+      <img src="https://img.shields.io/badge/Live_Demo-Visit_Site-2ea44f?style=for-the-badge&logo=vercel" alt="Live Demo" />
+    </a>
+    <a href="https://github.com/christinemirimba/safe-digital-space-africa">
+      <img src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github" alt="GitHub Repo" />
+    </a>
     <a href="#"><img src="https://img.shields.io/badge/License-MIT-312e81?style=for-the-badge" alt="License"></a>
-    <a href="#"><img src="https://img.shields.io/badge/Version-1.0.0-ea580c?style=for-the-badge" alt="Version"></a>
   </p>
 </div>
 
@@ -124,8 +128,8 @@ To create safer digital spaces for African women and girls by providing accessib
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/safespace-africa.git
-   cd safespace-africa
+   git clone https://github.com/christinemirimba/safe-digital-space-africa.git
+   cd safe-digital-space-africa
    ```
 
 2. **Install dependencies**
@@ -144,7 +148,7 @@ To create safer digital spaces for African women and girls by providing accessib
 
 4. **Open your browser**
    ```
-   Navigate to http://localhost:5173
+   Navigate to http://localhost:8080
    ```
 
 ### Build for Production
@@ -334,7 +338,7 @@ Create a `.env` file for environment-specific configuration:
 
 ```env
 VITE_API_URL=your_api_url
-VITE_CONTACT_EMAIL=mirimbachristine@gmail.com
+VITE_CONTACT_EMAIL=your_contact_email
 ```
 
 ### Custom Domain

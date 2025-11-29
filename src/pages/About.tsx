@@ -30,23 +30,23 @@ const values = [
 const team = [
   {
     name: "Christine Mirimba",
-    role: "Founder & Executive Director",
+    role: "Lead Developer",
     location: "Nairobi, Kenya",
   },
   {
-    name: "Grace Mwangi",
-    role: "Director of Digital Safety",
+    name: "Neema Muroki",
+    role: "Data Scientist",
     location: "Nairobi, Kenya",
   },
   {
-    name: "Fatima Hassan",
-    role: "Community Engagement Lead",
-    location: "Cairo, Egypt",
+    name: "Lynn Kathomi",
+    role: "Software Engineer",
+    location: "Nairobi, Kenya",
   },
   {
-    name: "Thandiwe Nkosi",
-    role: "Education Program Manager",
-    location: "Cape Town, South Africa",
+    name: "Samuel Muigai",
+    role: "Software Developer",
+    location: "Nairobi, Kenya",
   },
 ];
 
