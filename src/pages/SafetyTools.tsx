@@ -32,6 +32,14 @@ const SafetyTools = () => {
 
   const tools = [
     {
+      id: "voice-reporting",
+      icon: <Shield className="h-6 w-6" />,
+      title: "Voice Reporting",
+      description: "Securely record and document incidents of harassment or abuse.",
+      actionLabel: "Record Incident",
+      link: "/voice-reporting"
+    },
+    {
       id: "safety-plan",
       icon: <Shield className="h-6 w-6" />,
       title: "Safety Plan Wizard",
@@ -441,7 +449,7 @@ const SafetyTools = () => {
                 <Button
                   variant="outline"
                   className="w-full sm:w-auto"
-                  onClick={handleStartLiveChat}
+                  onClick={() => navigate("/ai-support")}
                 >
                   Get Live Support
                 </Button>

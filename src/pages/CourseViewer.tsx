@@ -154,41 +154,38 @@ const CourseViewer = () => {
     const isCourseCompleted = progressPercentage === 100;
 
     const SidebarContent = () => (
-        <div className="h-full flex flex-col bg-muted/30 border-r">
-            <div className="p-4 border-b bg-background">
-                <Link to="/digital-literacy" className="flex items-center text-sm text-muted-foreground hover:text-primary mb-4 transition-colors">
-                    <ChevronLeft className="h-4 w-4 mr-1" />
-                    Back to Courses
-                </Link>
-                <h2 className="font-bold text-lg leading-tight mb-2">{course.title}</h2>
-                <div className="space-y-2">
-                    <div className="flex justify-between text-xs text-muted-foreground">
-                        <span>{Math.round(progressPercentage)}% Complete</span>
-                        <span>{completedLessons.length}/{totalLessons} Steps</span>
+        <div className="h-full flex flex-col bg-slate-50 border-l">
+            <div className="p-6 border-b bg-white shadow-sm">
+                <h2 className="font-bold text-xl text-slate-800 mb-4">Course Content</h2>
+                <div className="space-y-3">
+                    <div className="flex justify-between text-sm font-medium text-slate-600">
+                        <span>{Math.round(progressPercentage)}% Completed</span>
                     </div>
-                    <Progress value={progressPercentage} className="h-2" />
+                    <Progress value={progressPercentage} className="h-3 bg-slate-100 [&>div]:bg-teal-500" />
                 </div>
                 {isCourseCompleted && (
-                    <div className="mt-4">
+                    <div className="mt-6">
                         <Certificate
-                            studentName="Learner" // Ideally from user profile
+                            studentName="Learner"
                             courseName={course.title}
                             date={new Date().toLocaleDateString()}
                         />
                     </div>
                 )}
             </div>
-            <ScrollArea className="flex-1">
-                <div className="p-4 space-y-6">
+            <ScrollArea className="flex-1 p-4">
+                <div className="space-y-4">
                     {course.modules.map((module, index) => {
                         const locked = isModuleLocked(index);
                         return (
-                            <div key={module.id} className={locked ? "opacity-50 pointer-events-none" : ""}>
-                                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3 pl-2 border-l-2 border-primary/20 flex justify-between items-center">
-                                    <span>Module {index + 1}: {module.title}</span>
-                                    {locked && <Lock className="h-3 w-3" />}
-                                </h3>
-                                <div className="space-y-1">
+                            <div key={module.id} className={`rounded-xl overflow-hidden border transition-all ${locked ? "bg-slate-50 border-slate-200 opacity-70" : "bg-teal-50/50 border-teal-100"}`}>
+                                <div className="p-4 bg-white/50 border-b border-slate-100/50 flex justify-between items-center">
+                                    <h3 className="font-bold text-slate-700">
+                                        Module {index + 1}: {module.title}
+                                    </h3>
+                                    {locked ? <Lock className="h-4 w-4 text-slate-400" /> : <div className="h-2 w-2 rounded-full bg-teal-500" />}
+                                </div>
+                                <div className="p-2 space-y-1">
                                     {module.lessons.map((lesson) => (
                                         <button
                                             key={lesson.id}
@@ -200,26 +197,26 @@ const CourseViewer = () => {
                                                     setCurrentQuizAnswers({});
                                                 }
                                             }}
+                                            disabled={locked}
                                             className={`w-full flex items-center gap-3 p-3 rounded-lg text-left transition-all ${currentLessonId === lesson.id
-                                                ? "bg-primary/10 text-primary font-medium"
-                                                : "hover:bg-muted text-muted-foreground hover:text-foreground"
+                                                ? "bg-teal-100 text-teal-900 font-medium shadow-sm"
+                                                : "hover:bg-white text-slate-600 hover:text-teal-700 hover:shadow-sm"
                                                 }`}
                                         >
                                             <div className="flex-shrink-0">
                                                 {completedLessons.includes(lesson.id) ? (
-                                                    <CheckCircle className="h-5 w-5 text-green-600" />
+                                                    <CheckCircle className="h-5 w-5 text-teal-600" />
                                                 ) : lesson.type === "quiz" ? (
-                                                    <Shield className="h-5 w-5" />
-                                                ) : lesson.type === "video" ? (
-                                                    <PlayCircle className="h-5 w-5" />
+                                                    <Shield className="h-5 w-5 text-slate-400" />
                                                 ) : (
-                                                    <FileText className="h-5 w-5" />
+                                                    <FileText className="h-5 w-5 text-slate-400" />
                                                 )}
                                             </div>
                                             <div className="flex-1 min-w-0">
                                                 <p className="truncate text-sm">{lesson.title}</p>
                                                 <p className="text-xs opacity-70">{lesson.duration}</p>
                                             </div>
+                                            {locked && <Lock className="h-3 w-3 text-slate-300" />}
                                         </button>
                                     ))}
                                 </div>
@@ -228,16 +225,170 @@ const CourseViewer = () => {
                     })}
                 </div>
             </ScrollArea>
+            <div className="p-4 border-t bg-white">
+                <Link to="/digital-literacy">
+                    <Button variant="outline" className="w-full border-slate-200 text-slate-600 hover:text-teal-700 hover:border-teal-200 hover:bg-teal-50">
+                        <ChevronLeft className="h-4 w-4 mr-2" /> Back to Courses
+                    </Button>
+                </Link>
+            </div>
         </div>
     );
 
+    const QuizView = ({ lesson }: { lesson: Lesson }) => {
+        const isPassed = quizResults[lesson.id];
+        const questionCount = lesson.questions?.length || 0;
+
+        return (
+            <div className="max-w-3xl mx-auto">
+                {/* Quiz Header Meta */}
+                <div className="flex flex-wrap items-center gap-6 mb-8 text-slate-500 bg-white p-4 rounded-xl border shadow-sm">
+                    <div className="flex items-center gap-2">
+                        <AlertCircle className="h-5 w-5 text-teal-500" />
+                        <span className="font-medium">{questionCount} Questions</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <div className="h-5 w-5 rounded-full border-2 border-teal-500 flex items-center justify-center text-[10px] font-bold text-teal-500">L</div>
+                        <span className="font-medium">{lesson.duration}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <CheckCircle className="h-5 w-5 text-teal-500" />
+                        <span className="font-medium">70% Pass Mark</span>
+                    </div>
+                </div>
+
+                {isPassed && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mb-8 bg-teal-50 border border-teal-200 rounded-xl p-6 flex items-start gap-4"
+                    >
+                        <div className="h-10 w-10 rounded-full bg-teal-100 flex items-center justify-center flex-shrink-0">
+                            <span className="text-xl">🎉</span>
+                        </div>
+                        <div>
+                            <h3 className="font-bold text-teal-900 text-lg mb-1">Great job! You've completed this quiz.</h3>
+                            <p className="text-teal-700">No need to retake—keep going! You can proceed to the next module.</p>
+                        </div>
+                    </motion.div>
+                )}
+
+                {!quizSubmitted && !isPassed && (
+                    <div className="bg-slate-50 rounded-xl p-6 mb-8 border border-slate-200">
+                        <h3 className="font-bold text-slate-800 mb-4 flex items-center gap-2">
+                            <FileText className="h-5 w-5" /> Important Quiz Instructions
+                        </h3>
+                        <ul className="space-y-3 text-slate-600 text-sm">
+                            <li className="flex gap-2">
+                                <span className="font-bold text-slate-400">1.</span>
+                                <span>We'll always save your very first attempt, no matter how you score.</span>
+                            </li>
+                            <li className="flex gap-2">
+                                <span className="font-bold text-slate-400">2.</span>
+                                <span>If you pass, you're good to go—no need to retake.</span>
+                            </li>
+                            <li className="flex gap-2">
+                                <span className="font-bold text-slate-400">3.</span>
+                                <span>Heads up: Once you start the quiz, please stay on the quiz page.</span>
+                            </li>
+                        </ul>
+                    </div>
+                )}
+
+                {/* Questions */}
+                <div className="space-y-8 mb-12">
+                    {lesson.questions?.map((q, idx) => (
+                        <Card key={q.id} className="border-slate-200 shadow-sm overflow-hidden">
+                            <CardHeader className="bg-slate-50/50 border-b border-slate-100 pb-4">
+                                <CardTitle className="text-lg font-medium text-slate-800">
+                                    <span className="text-teal-600 mr-2">{idx + 1}.</span> {q.text}
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent className="pt-6">
+                                <RadioGroup
+                                    value={currentQuizAnswers[q.id]?.toString()}
+                                    onValueChange={(val) => {
+                                        if (!quizSubmitted) {
+                                            setCurrentQuizAnswers({
+                                                ...currentQuizAnswers,
+                                                [q.id]: parseInt(val)
+                                            });
+                                        }
+                                    }}
+                                    disabled={quizSubmitted && isPassed}
+                                >
+                                    {q.options.map((opt, optIdx) => (
+                                        <div key={optIdx} className={`flex items-center space-x-3 p-3 rounded-lg border transition-all ${quizSubmitted
+                                                ? optIdx === q.correctAnswer
+                                                    ? "bg-green-50 border-green-200"
+                                                    : currentQuizAnswers[q.id] === optIdx
+                                                        ? "bg-red-50 border-red-200"
+                                                        : "border-transparent"
+                                                : currentQuizAnswers[q.id] === optIdx
+                                                    ? "bg-teal-50 border-teal-200"
+                                                    : "border-transparent hover:bg-slate-50"
+                                            }`}>
+                                            <RadioGroupItem value={optIdx.toString()} id={`${q.id}-${optIdx}`} className="text-teal-600 border-slate-300" />
+                                            <Label htmlFor={`${q.id}-${optIdx}`} className={`flex-1 cursor-pointer ${quizSubmitted
+                                                    ? optIdx === q.correctAnswer
+                                                        ? "text-green-700 font-medium"
+                                                        : currentQuizAnswers[q.id] === optIdx
+                                                            ? "text-red-700"
+                                                            : "text-slate-600"
+                                                    : "text-slate-700"
+                                                }`}>
+                                                {opt}
+                                            </Label>
+                                            {quizSubmitted && optIdx === q.correctAnswer && <CheckCircle className="h-4 w-4 text-green-600" />}
+                                        </div>
+                                    ))}
+                                </RadioGroup>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
+
+                {/* Action Bar */}
+                <div className="sticky bottom-6 bg-white p-4 rounded-xl shadow-lg border border-slate-200 flex justify-between items-center z-10">
+                    <Button variant="ghost" onClick={() => {
+                        // Logic to go back
+                    }}>
+                        <ChevronLeft className="mr-2 h-4 w-4" /> Previous
+                    </Button>
+
+                    {!isPassed ? (
+                        <Button
+                            onClick={handleQuizSubmit}
+                            className="bg-teal-600 hover:bg-teal-700 text-white min-w-[150px]"
+                            disabled={Object.keys(currentQuizAnswers).length !== questionCount}
+                        >
+                            Submit Quiz
+                        </Button>
+                    ) : (
+                        <div className="flex gap-3">
+                            <Button variant="outline" onClick={() => {
+                                setQuizSubmitted(false);
+                                setCurrentQuizAnswers({});
+                            }}>
+                                Retake Quiz
+                            </Button>
+                            <Button onClick={navigateToNext} className="bg-teal-600 hover:bg-teal-700">
+                                Next Module <ChevronRight className="ml-2 h-4 w-4" />
+                            </Button>
+                        </div>
+                    )}
+                </div>
+            </div>
+        );
+    };
+
     return (
-        <div className="h-[calc(100vh-5rem)] flex flex-col md:flex-row overflow-hidden bg-background">
+        <div className="h-[calc(100vh-4rem)] flex flex-col md:flex-row overflow-hidden bg-slate-50/30">
             {/* Mobile Sidebar Trigger */}
-            <div className="md:hidden p-4 border-b flex items-center justify-between bg-background">
+            <div className="md:hidden p-4 border-b flex items-center justify-between bg-white sticky top-0 z-20">
                 <div className="flex items-center gap-2">
-                    <Shield className="h-5 w-5 text-primary" />
-                    <span className="font-semibold truncate">{course.title}</span>
+                    <Shield className="h-5 w-5 text-teal-600" />
+                    <span className="font-bold text-slate-800 truncate">{course.title}</span>
                 </div>
                 <Sheet open={isSidebarOpen} onOpenChange={setIsSidebarOpen}>
                     <SheetTrigger asChild>
@@ -245,23 +396,18 @@ const CourseViewer = () => {
                             <Menu className="h-5 w-5" />
                         </Button>
                     </SheetTrigger>
-                    <SheetContent side="left" className="p-0 w-80">
+                    <SheetContent side="right" className="p-0 w-80">
                         <SidebarContent />
                     </SheetContent>
                 </Sheet>
             </div>
 
-            {/* Desktop Layout */}
+            {/* Desktop Layout - Content Left, Sidebar Right */}
             <ResizablePanelGroup direction="horizontal" className="flex-1">
-                <ResizablePanel defaultSize={25} minSize={20} maxSize={35} className="hidden md:block">
-                    <SidebarContent />
-                </ResizablePanel>
-
-                <ResizableHandle className="hidden md:flex" />
-
+                {/* Main Content Area */}
                 <ResizablePanel defaultSize={75}>
                     <ScrollArea className="h-full">
-                        <div className="max-w-4xl mx-auto p-6 md:p-12">
+                        <div className="max-w-5xl mx-auto p-6 md:p-12">
                             <AnimatePresence mode="wait">
                                 {currentLesson && (
                                     <motion.div
@@ -271,123 +417,56 @@ const CourseViewer = () => {
                                         exit={{ opacity: 0, y: -10 }}
                                         transition={{ duration: 0.3 }}
                                     >
-                                        <div className="mb-8">
-                                            <span className="text-sm font-medium text-primary mb-2 block">
-                                                {currentLesson.type === 'quiz' ? 'Assessment' : 'Lesson'}
-                                            </span>
-                                            <h1 className="text-3xl font-bold font-display mb-4">
+                                        <div className="mb-8 border-b border-slate-200 pb-6">
+                                            <div className="flex items-center gap-2 text-sm font-medium text-teal-600 mb-2 uppercase tracking-wider">
+                                                <span className="bg-teal-50 px-2 py-1 rounded-md">
+                                                    {currentLesson.type === 'quiz' ? 'Assessment' : 'Lesson'}
+                                                </span>
+                                                <span>•</span>
+                                                <span>{currentLesson.duration}</span>
+                                            </div>
+                                            <h1 className="text-3xl md:text-4xl font-bold font-display text-slate-900 mb-2">
                                                 {currentLesson.title}
                                             </h1>
                                         </div>
 
                                         {currentLesson.type === 'text' && (
-                                            <div className="prose prose-lg dark:prose-invert max-w-none mb-12">
+                                            <div className="prose prose-lg prose-slate max-w-none mb-12 prose-headings:text-slate-800 prose-p:text-slate-600 prose-strong:text-teal-700 prose-a:text-teal-600">
                                                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                                                     {currentLesson.content || ""}
                                                 </ReactMarkdown>
-                                            </div>
-                                        )}
 
-                                        {currentLesson.type === 'quiz' && currentLesson.questions && (
-                                            <div className="space-y-8 mb-12">
-                                                {currentLesson.questions.map((q, idx) => (
-                                                    <Card key={q.id}>
-                                                        <CardHeader>
-                                                            <CardTitle className="text-lg">
-                                                                {idx + 1}. {q.text}
-                                                            </CardTitle>
-                                                        </CardHeader>
-                                                        <CardContent>
-                                                            <RadioGroup
-                                                                value={currentQuizAnswers[q.id]?.toString()}
-                                                                onValueChange={(val) => {
-                                                                    if (!quizSubmitted) {
-                                                                        setCurrentQuizAnswers({
-                                                                            ...currentQuizAnswers,
-                                                                            [q.id]: parseInt(val)
-                                                                        });
-                                                                    }
-                                                                }}
-                                                                disabled={quizSubmitted && quizResults[currentLesson.id]}
-                                                            >
-                                                                {q.options.map((opt, optIdx) => (
-                                                                    <div key={optIdx} className="flex items-center space-x-2">
-                                                                        <RadioGroupItem value={optIdx.toString()} id={`${q.id}-${optIdx}`} />
-                                                                        <Label htmlFor={`${q.id}-${optIdx}`} className={
-                                                                            quizSubmitted
-                                                                                ? optIdx === q.correctAnswer
-                                                                                    ? "text-green-600 font-bold"
-                                                                                    : currentQuizAnswers[q.id] === optIdx
-                                                                                        ? "text-red-600"
-                                                                                        : ""
-                                                                                : ""
-                                                                        }>
-                                                                            {opt}
-                                                                        </Label>
-                                                                    </div>
-                                                                ))}
-                                                            </RadioGroup>
-                                                        </CardContent>
-                                                    </Card>
-                                                ))}
-
-                                                {!quizResults[currentLesson.id] && (
-                                                    <Button onClick={handleQuizSubmit} className="w-full">
-                                                        Submit Quiz
+                                                <div className="mt-12 flex justify-end">
+                                                    <Button
+                                                        onClick={handleLessonComplete}
+                                                        size="lg"
+                                                        className={completedLessons.includes(currentLesson.id) ? "bg-green-600 hover:bg-green-700" : "bg-teal-600 hover:bg-teal-700"}
+                                                    >
+                                                        {completedLessons.includes(currentLesson.id) ? (
+                                                            <>Completed <CheckCircle className="ml-2 h-5 w-5" /></>
+                                                        ) : (
+                                                            <>Mark as Complete <ChevronRight className="ml-2 h-5 w-5" /></>
+                                                        )}
                                                     </Button>
-                                                )}
-
-                                                {quizResults[currentLesson.id] && (
-                                                    <div className="p-4 bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300 rounded-lg flex items-center gap-2">
-                                                        <CheckCircle className="h-5 w-5" />
-                                                        <span>Quiz Passed! You can proceed to the next module.</span>
-                                                    </div>
-                                                )}
+                                                </div>
                                             </div>
                                         )}
 
-                                        {/* Navigation Footer */}
-                                        <div className="flex items-center justify-between pt-8 border-t">
-                                            <Button
-                                                variant="outline"
-                                                disabled={currentLessonId === course.modules[0].lessons[0].id}
-                                                onClick={() => {
-                                                    // Logic to go back
-                                                }}
-                                            >
-                                                <ChevronLeft className="mr-2 h-4 w-4" />
-                                                Previous
-                                            </Button>
-
-                                            {currentLesson.type !== 'quiz' ? (
-                                                <Button
-                                                    onClick={handleLessonComplete}
-                                                    className={completedLessons.includes(currentLesson.id) ? "bg-green-600 hover:bg-green-700" : ""}
-                                                >
-                                                    {completedLessons.includes(currentLesson.id) ? (
-                                                        <>
-                                                            Completed <CheckCircle className="ml-2 h-4 w-4" />
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            Mark as Complete <ChevronRight className="ml-2 h-4 w-4" />
-                                                        </>
-                                                    )}
-                                                </Button>
-                                            ) : (
-                                                <Button
-                                                    onClick={navigateToNext}
-                                                    disabled={!quizResults[currentLesson.id]}
-                                                >
-                                                    Next Module <ChevronRight className="ml-2 h-4 w-4" />
-                                                </Button>
-                                            )}
-                                        </div>
+                                        {currentLesson.type === 'quiz' && (
+                                            <QuizView lesson={currentLesson} />
+                                        )}
                                     </motion.div>
                                 )}
                             </AnimatePresence>
                         </div>
                     </ScrollArea>
+                </ResizablePanel>
+
+                <ResizableHandle className="hidden md:flex bg-slate-200" />
+
+                {/* Sidebar Area - Now on the Right */}
+                <ResizablePanel defaultSize={25} minSize={20} maxSize={35} className="hidden md:block">
+                    <SidebarContent />
                 </ResizablePanel>
             </ResizablePanelGroup>
         </div>

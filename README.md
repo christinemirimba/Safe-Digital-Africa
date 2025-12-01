@@ -8,6 +8,9 @@
 ## Repository
 [https://github.com/christinemirimba/safe-digital-space-africa.git](https://github.com/christinemirimba/safe-digital-space-africa.git)
 
+## Pitch Deck
+[https://www.canva.com/design/DAG6A9LZsFY/IekQmhD0cskxexSc5X29cg/edit?utm_content=DAG6A9LZsFY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton](https://www.canva.com/design/DAG6A9LZsFY/IekQmhD0cskxexSc5X29cg/edit?utm_content=DAG6A9LZsFY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+
 ## Project Overview
 Safe Digital Africa is a comprehensive platform designed to address the digital safety gap for African women. It combines educational resources, practical safety tools, and a supportive community to create a safer online environment.
 
@@ -74,5 +77,33 @@ Safe Digital Africa is a comprehensive platform designed to address the digital 
     npm run dev
     ```
 
-## License
-MIT
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🙏 Acknowledgments
+
+- **16 Days of Activism Against Gender-Based Violence** - Our inspiration and commitment
+- **African Women in Tech Community** - For support and feedback
+- **Open Source Contributors** - For the amazing tools and libraries
+- **All the brave women and girls** who shared their stories to help us build this platform
+
+---
+## 🔮 Roadmap
+
+### Upcoming Features
+- [ ] Multi-language support (French, Swahili, Arabic, Portuguese)
+- [ ] AI-powered threat detection
+- [ ] Offline mode for areas with limited connectivity
+
+<div align="center">
+  <p>Made with ❤️ for African Women and Girls</p>
+  <p>© 2025 SafeSpace Africa. All rights reserved.</p>
+  
+  <p>
+    <strong>Together, we build safer digital spaces.</strong>
+  </p>
+</div>
+

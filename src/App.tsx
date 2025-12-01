@@ -26,6 +26,7 @@ import NotFound from "./pages/NotFound";
 import SafetyPlan from "./pages/SafetyPlan";
 import Journal from "./pages/Journal";
 import AISupport from "./pages/AISupport";
+import VoiceReporting from "./pages/VoiceReporting";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const App = () => (
               <Route path="/digital-footprint-analyzer" element={<DigitalFootprintAnalyzer />} />
               <Route path="/journal" element={<Journal />} />
               <Route path="/ai-support" element={<AISupport />} />
+              <Route path="/voice-reporting" element={<VoiceReporting />} />
               <Route path="/resources" element={<Resources />} />
               <Route path="/community" element={<Community />} />
               <Route path="/report-incident" element={<IncidentReporting />} />
