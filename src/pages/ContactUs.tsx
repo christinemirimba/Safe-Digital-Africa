@@ -23,23 +23,18 @@ const ContactUs = () => {
     setIsSubmitting(true);
 
     try {
-      // In a real production environment, this would call the backend API
-      // const response = await fetch('/api/send-email', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(formData),
-      // });
-
-      // For demonstration purposes, we'll simulate a successful API call
-      // and log the data that would be sent to Resend
-      console.log("Sending email via Resend API...", {
-        from: "help@safedigitalafrica.org",
-        to: "mirimbachristine@gmail.com",
-        subject: `New Contact Form Submission from ${formData.name}`,
-        html: formData.message
+      // Call the backend API
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
       });
 
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message');
+      }
 
       toast({
         title: "Message Sent Successfully!",
@@ -50,9 +45,10 @@ const ContactUs = () => {
 
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (error) {
+      console.error("Contact Form Error:", error);
       toast({
         title: "Error Sending Message",
-        description: "Please try again later or contact us directly via email.",
+        description: error instanceof Error ? error.message : "Please try again later or contact us directly via email.",
         variant: "destructive",
       });
     } finally {

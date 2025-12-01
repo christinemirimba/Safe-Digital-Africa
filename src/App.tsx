@@ -23,6 +23,9 @@ import Community from "./pages/Community";
 import IncidentReporting from "./pages/IncidentReporting";
 import Analytics from "./pages/admin/Analytics";
 import NotFound from "./pages/NotFound";
+import SafetyPlan from "./pages/SafetyPlan";
+import Journal from "./pages/Journal";
+import AISupport from "./pages/AISupport";
 
 const queryClient = new QueryClient();
 
@@ -40,9 +43,12 @@ const App = () => (
               <Route path="/digital-literacy" element={<DigitalLiteracy />} />
               <Route path="/course/:courseId" element={<CourseViewer />} />
               <Route path="/safety-assessment" element={<SafetyAssessment />} />
+              <Route path="/safety-plan" element={<SafetyPlan />} />
               <Route path="/safety-tools" element={<SafetyTools />} />
               <Route path="/password-strength" element={<PasswordStrength />} />
               <Route path="/digital-footprint-analyzer" element={<DigitalFootprintAnalyzer />} />
+              <Route path="/journal" element={<Journal />} />
+              <Route path="/ai-support" element={<AISupport />} />
               <Route path="/resources" element={<Resources />} />
               <Route path="/community" element={<Community />} />
               <Route path="/report-incident" element={<IncidentReporting />} />

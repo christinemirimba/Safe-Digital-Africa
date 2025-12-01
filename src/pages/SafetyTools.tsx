@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Shield, Eye, AlertCircle, Lock, Smartphone, Globe, Key, Check, X, Search } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,7 @@ import { useToast } from "@/hooks/use-toast";
 import { ChatDisclaimerModal } from "@/components/ChatDisclaimerModal";
 
 const SafetyTools = () => {
+  const navigate = useNavigate();
   const [activeTool, setActiveTool] = useState<string | null>(null);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -30,6 +31,22 @@ const SafetyTools = () => {
   const { toast } = useToast();
 
   const tools = [
+    {
+      id: "safety-plan",
+      icon: <Shield className="h-6 w-6" />,
+      title: "Safety Plan Wizard",
+      description: "Create a personalized safety plan with emergency contacts and safe places.",
+      actionLabel: "Create Plan",
+      link: "/safety-plan"
+    },
+    {
+      id: "journal",
+      icon: <Lock className="h-6 w-6" />,
+      title: "Encrypted Journal",
+      description: "Securely document your experiences in a password-protected journal.",
+      actionLabel: "Open Journal",
+      link: "/journal"
+    },
     {
       id: "password-strength",
       icon: <Key className="h-6 w-6" />,
@@ -449,10 +466,14 @@ const SafetyTools = () => {
                 description={tool.description}
                 actionLabel={tool.actionLabel}
                 onAction={() => {
-                  setActiveTool(tool.id);
-                  setCheckResult(null);
-                  setPassword("");
-                  setEmail("");
+                  if (tool.link) {
+                    navigate(tool.link);
+                  } else {
+                    setActiveTool(tool.id);
+                    setCheckResult(null);
+                    setPassword("");
+                    setEmail("");
+                  }
                 }}
               />
             </motion.div>

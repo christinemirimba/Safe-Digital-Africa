@@ -14,8 +14,9 @@ import {
 
 const navLinks = [
   { name: "Safety Tools", path: "/safety-tools" },
-  { name: "Digital Literacy Hub", path: "/digital-literacy" },
-  { name: "How It Works", path: "/how-it-works" },
+  { name: "Digital Literacy", path: "/digital-literacy" },
+  { name: "Community", path: "/community" },
+  { name: "AI Support", path: "/ai-support" },
 ];
 
 export const Header = () => {
