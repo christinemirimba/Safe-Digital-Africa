@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🛡️ SafeSpace Africa
+# 🛡️ Safe Digital Africa
 
 ### Building Safer Digital Spaces for African Women & Girls
 
@@ -32,7 +32,7 @@
 
 ## 📖 About
 
-**SafeSpace Africa** is a comprehensive digital safety platform designed specifically to address the unique challenges faced by African women and girls in the digital space. Supporting the **16 Days of Activism Against Gender-Based Violence**, our platform provides:
+**Safe Digital Africa** is a comprehensive digital safety platform designed specifically to address the unique challenges faced by African women and girls in the digital space. Supporting the **16 Days of Activism Against Gender-Based Violence**, our platform provides:
 
 - 🎓 **Interactive Digital Literacy Courses** - Self-paced learning modules with quizzes and certifications
 - 🛡️ **Practical Safety Tools** - Password strength checker, email breach detection, and privacy checklists
