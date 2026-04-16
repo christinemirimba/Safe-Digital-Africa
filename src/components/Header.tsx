@@ -23,6 +23,14 @@ export const Header = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
 
+  // Define the sensitive routes where the Quick Exit button should be visible
+  const sensitiveRoutes = [
+    "/voice-reporting",
+    "/safety-plan",
+    "/journal",
+    "/ai-support"
+  ];
+
   const isActive = (path: string) => location.pathname === path;
 
   const handleQuickExit = () => {
@@ -62,27 +70,31 @@ export const Header = () => {
         {/* Right Actions */}
         <div className="hidden items-center space-x-4 md:flex">
           <ThemeToggle />
-          <Button
-            variant="destructive"
-            onClick={handleQuickExit}
-            className="hidden lg:flex gap-2 font-semibold shadow-md hover:shadow-lg transition-all"
-          >
-            <LogOut className="h-4 w-4" />
-            Quick Exit
-          </Button>
+          {sensitiveRoutes.includes(location.pathname) && (
+            <Button
+              variant="destructive"
+              onClick={handleQuickExit}
+              className="hidden lg:flex gap-2 font-semibold shadow-md hover:shadow-lg transition-all"
+            >
+              <LogOut className="h-4 w-4" />
+              Quick Exit
+            </Button>
+          )}
         </div>
 
         {/* Mobile Menu */}
         <div className="flex items-center space-x-4 md:hidden">
-          <Button
-            variant="destructive"
-            size="sm"
-            onClick={handleQuickExit}
-            className="flex gap-2 font-semibold"
-          >
-            <LogOut className="h-4 w-4" />
-            Exit
-          </Button>
+          {sensitiveRoutes.includes(location.pathname) && (
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={handleQuickExit}
+              className="flex gap-2 font-semibold"
+            >
+              <LogOut className="h-4 w-4" />
+              Exit
+            </Button>
+          )}
 
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
